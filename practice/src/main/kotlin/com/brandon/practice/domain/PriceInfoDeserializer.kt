@@ -17,6 +17,8 @@ class PriceInfoDeserializer : JsonDeserializer<PriceApiTemplate.PriceResponseTem
         val stockCode = node?.get("stockCd")?.asText()
         logger.info("### stockCode : ${stockCode}")
 
+        val d: JsonParser? = node?.traverse().also { it?.nextToken() }
+        
         return when (stockCode?.matches("[a-zA-Z]+".toRegex())) {
              true -> ctxt.readValue(node.traverse().also { it.nextToken() }, PriceApiTemplate.OverseaPriceRequest.Response::class.java)
             //true -> ctxt.readValue(node.traverse(), PriceApiTemplate.OverseaPriceRequest.Response::class.java)
