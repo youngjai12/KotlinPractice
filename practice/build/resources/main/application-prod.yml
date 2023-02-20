@@ -1,0 +1,6 @@
+client:
+  pioneer:
+    enable: true
+    # server: https://openapi.koreainvestment.com:9443
+    server: http://localhost:9443
+    timeout: 200s

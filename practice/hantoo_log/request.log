@@ -1,0 +1,4659 @@
+[2023-02-20T10:41:31.207] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 51142 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T10:41:31.211] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T10:41:31.668] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T10:41:31.904] [] INFO  Started PioneerClientTest in 1.371 seconds (JVM running for 2.651) 
+[2023-02-20T10:41:32.479] [] INFO  ####### initialized server ### 
+[2023-02-20T10:41:32.480] [] INFO  9443 started on port: 9443 
+[2023-02-20T10:41:32.524] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T10:41:33.137] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "0b505ac3-04f2-47fe-b2e7-644ad3a2ac42",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  0b505ac3-04f2-47fe-b2e7-644ad3a2ac42
+ 
+[2023-02-20T10:41:33.198] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "62ac5f75-5bb0-4c4b-9a1c-c1302e0e6169",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  62ac5f75-5bb0-4c4b-9a1c-c1302e0e6169
+ 
+[2023-02-20T10:41:33.799] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/domestic",
+    "queryStringParameters" : {
+      "fid_input_iscd" : [ "12393" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T10:41:33.801] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/domestic",
+    "queryStringParameters" : {
+      "fid_input_iscd" : [ "12393" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ didn't match expectation:
+
+  {
+    "id" : "0b505ac3-04f2-47fe-b2e7-644ad3a2ac42",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ because:
+
+  method matched
+  path didn't match
+ 
+[2023-02-20T10:41:33.803] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/domestic",
+    "queryStringParameters" : {
+      "fid_input_iscd" : [ "12393" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "62ac5f75-5bb0-4c4b-9a1c-c1302e0e6169",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T10:41:33.806] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/domestic",
+    "queryStringParameters" : {
+      "fid_input_iscd" : [ "12393" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}"
+  }
+
+ from expectation:
+
+  62ac5f75-5bb0-4c4b-9a1c-c1302e0e6169
+ 
+[2023-02-20T10:41:33.828] [] INFO  ### stockCode : null 
+[2023-02-20T10:41:33.841] [] INFO  nothing JSON decoding error: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$DomesticPriceRequest$Response`; nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$DomesticPriceRequest$Response`
+ at [Source: (io.netty.buffer.ByteBufInputStream); line: 1, column: 34] 
+[2023-02-20T10:41:52.278] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 51367 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T10:41:52.279] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T10:41:52.731] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T10:41:52.975] [] INFO  Started PioneerClientTest in 1.007 seconds (JVM running for 2.212) 
+[2023-02-20T10:41:53.413] [] INFO  ####### initialized server ### 
+[2023-02-20T10:41:53.414] [] INFO  9443 started on port: 9443 
+[2023-02-20T10:41:53.451] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T10:41:53.906] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "dd67449b-810a-46e2-b922-76d8e3d517bd",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  dd67449b-810a-46e2-b922-76d8e3d517bd
+ 
+[2023-02-20T10:41:53.971] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "f3e39851-9b36-41bb-b9e5-8cb11a8eab29",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  f3e39851-9b36-41bb-b9e5-8cb11a8eab29
+ 
+[2023-02-20T10:41:54.328] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T10:41:54.331] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "dd67449b-810a-46e2-b922-76d8e3d517bd",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T10:41:54.336] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  dd67449b-810a-46e2-b922-76d8e3d517bd
+ 
+[2023-02-20T10:41:54.353] [] INFO  ### stockCode : AAPL 
+[2023-02-20T10:41:54.362] [] INFO  nothing JSON decoding error: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$OverseaPriceRequest$Response`; nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$OverseaPriceRequest$Response`
+ at [Source: (io.netty.buffer.ByteBufInputStream); line: 1, column: 43] 
+[2023-02-20T10:42:33.182] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 51815 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T10:42:33.183] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T10:42:33.694] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T10:42:33.961] [] INFO  Started PioneerClientTest in 1.138 seconds (JVM running for 2.617) 
+[2023-02-20T10:42:34.548] [] INFO  ####### initialized server ### 
+[2023-02-20T10:42:34.549] [] INFO  9443 started on port: 9443 
+[2023-02-20T10:42:34.593] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T10:42:35.187] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "2cf02d0d-bd01-4c6c-8ce1-620d9b6dd4ba",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  2cf02d0d-bd01-4c6c-8ce1-620d9b6dd4ba
+ 
+[2023-02-20T10:42:35.253] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "75854b14-b291-4d71-b5ab-a554c5fed39d",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  75854b14-b291-4d71-b5ab-a554c5fed39d
+ 
+[2023-02-20T10:42:35.869] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T10:42:35.872] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "2cf02d0d-bd01-4c6c-8ce1-620d9b6dd4ba",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T10:42:35.876] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  2cf02d0d-bd01-4c6c-8ce1-620d9b6dd4ba
+ 
+[2023-02-20T10:42:35.898] [] INFO  ### stockCode : AAPL 
+[2023-02-20T10:48:05.536] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 55177 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T10:48:05.537] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T10:48:06.045] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T10:48:06.314] [] INFO  Started PioneerClientTest in 1.139 seconds (JVM running for 2.573) 
+[2023-02-20T10:48:06.932] [] INFO  ####### initialized server ### 
+[2023-02-20T10:48:06.934] [] INFO  9443 started on port: 9443 
+[2023-02-20T10:48:06.990] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T10:48:07.587] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "a822e591-003d-4f2f-9689-e8c9391209c7",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  a822e591-003d-4f2f-9689-e8c9391209c7
+ 
+[2023-02-20T10:48:07.653] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "33aebf56-204e-42d0-a936-cbebd1203ea5",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  33aebf56-204e-42d0-a936-cbebd1203ea5
+ 
+[2023-02-20T10:48:08.424] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T10:48:08.428] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "a822e591-003d-4f2f-9689-e8c9391209c7",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T10:48:08.434] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  a822e591-003d-4f2f-9689-e8c9391209c7
+ 
+[2023-02-20T10:48:08.457] [] INFO  ### stockCode : AAPL 
+[2023-02-20T10:48:50.050] [] INFO  nothing JSON decoding error: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$OverseaPriceRequest$Response`; nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$OverseaPriceRequest$Response`
+ at [Source: (io.netty.buffer.ByteBufInputStream); line: 1, column: 43] 
+[2023-02-20T10:49:02.689] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 55839 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T10:49:02.690] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T10:49:03.209] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T10:49:03.523] [] INFO  Started PioneerClientTest in 1.225 seconds (JVM running for 2.659) 
+[2023-02-20T10:49:04.241] [] INFO  ####### initialized server ### 
+[2023-02-20T10:49:04.242] [] INFO  9443 started on port: 9443 
+[2023-02-20T10:49:04.307] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T10:49:04.899] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "1c8499d3-0897-41ac-8367-b9bf4ce28119",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  1c8499d3-0897-41ac-8367-b9bf4ce28119
+ 
+[2023-02-20T10:49:04.957] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "5c4823af-4aaa-405a-8db9-3aebda024116",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  5c4823af-4aaa-405a-8db9-3aebda024116
+ 
+[2023-02-20T10:49:05.371] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T10:49:05.373] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "1c8499d3-0897-41ac-8367-b9bf4ce28119",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T10:49:05.377] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  1c8499d3-0897-41ac-8367-b9bf4ce28119
+ 
+[2023-02-20T10:49:05.395] [] INFO  ### stockCode : AAPL 
+[2023-02-20T10:53:16.218] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 58429 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T10:53:16.220] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T10:53:16.760] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T10:53:17.041] [] INFO  Started PioneerClientTest in 1.248 seconds (JVM running for 2.764) 
+[2023-02-20T10:53:17.654] [] INFO  ####### initialized server ### 
+[2023-02-20T10:53:17.655] [] INFO  9443 started on port: 9443 
+[2023-02-20T10:53:17.702] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T10:53:18.361] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "55da8c1e-51c6-42e9-bc04-cbf3aefb9aea",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  55da8c1e-51c6-42e9-bc04-cbf3aefb9aea
+ 
+[2023-02-20T10:53:18.423] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "164ca6c2-72d4-4bb6-a11c-1514fda2771c",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  164ca6c2-72d4-4bb6-a11c-1514fda2771c
+ 
+[2023-02-20T10:53:19.225] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T10:53:19.228] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "55da8c1e-51c6-42e9-bc04-cbf3aefb9aea",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T10:53:19.233] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  55da8c1e-51c6-42e9-bc04-cbf3aefb9aea
+ 
+[2023-02-20T10:53:19.251] [] INFO  ### stockCode : AAPL 
+[2023-02-20T10:54:21.399] [] INFO  nothing JSON decoding error: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$OverseaPriceRequest$Response`; nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$OverseaPriceRequest$Response`
+ at [Source: (io.netty.buffer.ByteBufInputStream); line: 1, column: 43] 
+[2023-02-20T10:54:31.270] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 59204 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T10:54:31.272] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T10:54:31.970] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T10:54:32.239] [] INFO  Started PioneerClientTest in 1.684 seconds (JVM running for 6.441) 
+[2023-02-20T10:54:32.816] [] INFO  ####### initialized server ### 
+[2023-02-20T10:54:32.817] [] INFO  9443 started on port: 9443 
+[2023-02-20T10:54:32.861] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T10:54:33.406] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "04a47747-67ba-4b37-a78d-a4314b1e1c6c",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  04a47747-67ba-4b37-a78d-a4314b1e1c6c
+ 
+[2023-02-20T10:54:33.474] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "c76ba763-cd41-463e-ac52-1a5c94d6f7e0",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  c76ba763-cd41-463e-ac52-1a5c94d6f7e0
+ 
+[2023-02-20T10:54:34.064] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T10:54:34.067] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "04a47747-67ba-4b37-a78d-a4314b1e1c6c",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T10:54:34.071] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  04a47747-67ba-4b37-a78d-a4314b1e1c6c
+ 
+[2023-02-20T10:54:34.090] [] INFO  ### stockCode : AAPL 
+[2023-02-20T10:54:45.068] [] INFO  nothing JSON decoding error: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$OverseaPriceRequest$Response`; nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$OverseaPriceRequest$Response`
+ at [Source: (io.netty.buffer.ByteBufInputStream); line: 1, column: 43] 
+[2023-02-20T10:54:52.992] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 59429 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T10:54:52.993] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T10:54:53.659] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T10:54:54.011] [] INFO  Started PioneerClientTest in 1.527 seconds (JVM running for 4.509) 
+[2023-02-20T10:54:54.780] [] INFO  ####### initialized server ### 
+[2023-02-20T10:54:54.781] [] INFO  9443 started on port: 9443 
+[2023-02-20T10:54:54.841] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T10:54:55.597] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "fe502199-de05-473e-b85b-c2691b8b5a6d",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  fe502199-de05-473e-b85b-c2691b8b5a6d
+ 
+[2023-02-20T10:54:55.685] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "528bd43d-0447-4cf2-a13f-1b89e3cbc0f0",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  528bd43d-0447-4cf2-a13f-1b89e3cbc0f0
+ 
+[2023-02-20T10:54:56.195] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T10:54:56.198] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "fe502199-de05-473e-b85b-c2691b8b5a6d",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T10:54:56.205] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  fe502199-de05-473e-b85b-c2691b8b5a6d
+ 
+[2023-02-20T10:54:56.236] [] INFO  ### stockCode : AAPL 
+[2023-02-20T10:56:24.906] [] INFO  nothing JSON decoding error: Cannot deserialize value of type `com.brandon.practice.client.PriceApiTemplate$OverseaPriceRequest$Response` from Object value (token `JsonToken.START_OBJECT`); nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot deserialize value of type `com.brandon.practice.client.PriceApiTemplate$OverseaPriceRequest$Response` from Object value (token `JsonToken.START_OBJECT`)
+ at [Source: (io.netty.buffer.ByteBufInputStream); line: 1, column: 43] 
+[2023-02-20T10:56:34.194] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 60534 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T10:56:34.196] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T10:56:34.991] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T10:56:35.254] [] INFO  Started PioneerClientTest in 2.053 seconds (JVM running for 6.58) 
+[2023-02-20T10:56:35.814] [] INFO  ####### initialized server ### 
+[2023-02-20T10:56:35.815] [] INFO  9443 started on port: 9443 
+[2023-02-20T10:56:35.859] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T10:56:36.421] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "c9c07a5a-64c6-4ed0-8005-7045726dd5b4",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  c9c07a5a-64c6-4ed0-8005-7045726dd5b4
+ 
+[2023-02-20T10:56:36.480] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "c1b2a819-5ccc-4f1e-8cde-2a5b6ae90531",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  c1b2a819-5ccc-4f1e-8cde-2a5b6ae90531
+ 
+[2023-02-20T10:56:37.131] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T10:56:37.134] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "c9c07a5a-64c6-4ed0-8005-7045726dd5b4",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T10:56:37.138] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  c9c07a5a-64c6-4ed0-8005-7045726dd5b4
+ 
+[2023-02-20T10:56:37.158] [] INFO  ### stockCode : AAPL 
+[2023-02-20T10:57:21.036] [] INFO  nothing JSON decoding error: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$OverseaPriceRequest$Response`; nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$OverseaPriceRequest$Response`
+ at [Source: (io.netty.buffer.ByteBufInputStream); line: 1, column: 43] 
+[2023-02-20T10:59:29.912] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 62337 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T10:59:29.913] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T10:59:30.419] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T10:59:30.683] [] INFO  Started PioneerClientTest in 1.147 seconds (JVM running for 2.554) 
+[2023-02-20T10:59:31.236] [] INFO  ####### initialized server ### 
+[2023-02-20T10:59:31.237] [] INFO  9443 started on port: 9443 
+[2023-02-20T10:59:31.281] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T10:59:31.843] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "f728a5a9-6922-460a-9733-8e83aa8bf127",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  f728a5a9-6922-460a-9733-8e83aa8bf127
+ 
+[2023-02-20T10:59:31.910] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "ba4b4afe-d7e2-4c3d-9f4f-3e5e4eb3d324",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  ba4b4afe-d7e2-4c3d-9f4f-3e5e4eb3d324
+ 
+[2023-02-20T10:59:32.568] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T10:59:32.571] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "f728a5a9-6922-460a-9733-8e83aa8bf127",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T10:59:32.575] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  f728a5a9-6922-460a-9733-8e83aa8bf127
+ 
+[2023-02-20T10:59:32.597] [] INFO  ### stockCode : AAPL 
+[2023-02-20T10:59:38.735] [] INFO  ### 13.1123, 5 
+[2023-02-20T10:59:38.752] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/domestic",
+    "queryStringParameters" : {
+      "fid_input_iscd" : [ "12393" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T10:59:38.753] [] INFO  ### stockCode : null 
+[2023-02-20T10:59:38.754] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/domestic",
+    "queryStringParameters" : {
+      "fid_input_iscd" : [ "12393" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ didn't match expectation:
+
+  {
+    "id" : "f728a5a9-6922-460a-9733-8e83aa8bf127",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ because:
+
+  method matched
+  path didn't match
+ 
+[2023-02-20T10:59:40.244] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/domestic",
+    "queryStringParameters" : {
+      "fid_input_iscd" : [ "12393" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "ba4b4afe-d7e2-4c3d-9f4f-3e5e4eb3d324",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T10:59:40.247] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/domestic",
+    "queryStringParameters" : {
+      "fid_input_iscd" : [ "12393" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}"
+  }
+
+ from expectation:
+
+  ba4b4afe-d7e2-4c3d-9f4f-3e5e4eb3d324
+ 
+[2023-02-20T10:59:53.140] [] INFO  nothing JSON decoding error: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$DomesticPriceRequest$Response`; nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$DomesticPriceRequest$Response`
+ at [Source: (io.netty.buffer.ByteBufInputStream); line: 1, column: 34] 
+[2023-02-20T21:21:32.343] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 90765 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T21:21:32.344] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T21:21:32.860] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T21:21:33.125] [] INFO  Started PioneerClientTest in 1.155 seconds (JVM running for 2.608) 
+[2023-02-20T21:21:33.754] [] INFO  ####### initialized server ### 
+[2023-02-20T21:21:33.755] [] INFO  9443 started on port: 9443 
+[2023-02-20T21:21:33.812] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T21:21:34.405] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "4db76c93-faff-4749-a406-476307bd612e",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  4db76c93-faff-4749-a406-476307bd612e
+ 
+[2023-02-20T21:21:34.469] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "57c1f0a2-22b4-4e09-9dcd-43107a5f0bd4",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  57c1f0a2-22b4-4e09-9dcd-43107a5f0bd4
+ 
+[2023-02-20T21:21:34.955] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T21:21:34.958] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "4db76c93-faff-4749-a406-476307bd612e",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T21:21:34.962] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  4db76c93-faff-4749-a406-476307bd612e
+ 
+[2023-02-20T21:21:34.981] [] INFO  ### stockCode : AAPL 
+[2023-02-20T21:30:21.649] [] INFO  nothing JSON decoding error: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$OverseaPriceRequest$Response`; nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$OverseaPriceRequest$Response`
+ at [Source: (io.netty.buffer.ByteBufInputStream); line: 1, column: 43] 
+[2023-02-20T21:31:20.080] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 96812 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T21:31:20.081] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T21:31:20.563] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T21:31:20.786] [] INFO  Started PioneerClientTest in 1.064 seconds (JVM running for 2.182) 
+[2023-02-20T21:31:21.202] [] INFO  ####### initialized server ### 
+[2023-02-20T21:31:21.203] [] INFO  9443 started on port: 9443 
+[2023-02-20T21:31:21.239] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T21:31:21.682] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "0d63c62f-394a-4342-858e-0134bba8ce6a",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  0d63c62f-394a-4342-858e-0134bba8ce6a
+ 
+[2023-02-20T21:31:21.736] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "15650225-c38e-4dfa-9c3f-141448a5c363",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  15650225-c38e-4dfa-9c3f-141448a5c363
+ 
+[2023-02-20T21:31:22.448] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T21:31:22.450] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "0d63c62f-394a-4342-858e-0134bba8ce6a",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T21:31:22.454] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  0d63c62f-394a-4342-858e-0134bba8ce6a
+ 
+[2023-02-20T21:31:22.469] [] INFO  ### stockCode : AAPL 
+[2023-02-20T21:31:22.480] [] INFO  nothing JSON decoding error: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$OverseaPriceRequest$Response`; nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$OverseaPriceRequest$Response`
+ at [Source: (io.netty.buffer.ByteBufInputStream); line: 1, column: 43] 
+[2023-02-20T21:35:56.115] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 99728 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T21:35:56.116] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T21:35:56.619] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T21:35:56.881] [] INFO  Started PioneerClientTest in 1.331 seconds (JVM running for 2.756) 
+[2023-02-20T21:35:57.454] [] INFO  ####### initialized server ### 
+[2023-02-20T21:35:57.455] [] INFO  9443 started on port: 9443 
+[2023-02-20T21:35:57.499] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T21:35:58.035] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "b776f5f4-fb03-42ef-ba97-f80dd39ec656",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  b776f5f4-fb03-42ef-ba97-f80dd39ec656
+ 
+[2023-02-20T21:35:58.102] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "bfe4024e-4eae-41e0-95d3-b682c3217712",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  bfe4024e-4eae-41e0-95d3-b682c3217712
+ 
+[2023-02-20T21:35:58.692] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T21:35:58.702] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "b776f5f4-fb03-42ef-ba97-f80dd39ec656",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T21:35:58.704] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  b776f5f4-fb03-42ef-ba97-f80dd39ec656
+ 
+[2023-02-20T21:35:58.719] [] INFO  ### stockCode : AAPL 
+[2023-02-20T21:38:28.208] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 1722 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T21:38:28.209] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T21:38:28.697] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T21:38:28.954] [] INFO  Started PioneerClientTest in 1.136 seconds (JVM running for 3.268) 
+[2023-02-20T21:38:29.530] [] INFO  ####### initialized server ### 
+[2023-02-20T21:38:29.531] [] INFO  9443 started on port: 9443 
+[2023-02-20T21:38:29.584] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T21:38:30.332] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "75d53a0d-038e-4451-b790-57fe74d34943",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  75d53a0d-038e-4451-b790-57fe74d34943
+ 
+[2023-02-20T21:38:30.400] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "7d662ac8-3c54-49b2-bb9b-0ca56fa74548",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  7d662ac8-3c54-49b2-bb9b-0ca56fa74548
+ 
+[2023-02-20T21:38:31.256] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T21:38:31.260] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "75d53a0d-038e-4451-b790-57fe74d34943",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T21:38:31.264] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  75d53a0d-038e-4451-b790-57fe74d34943
+ 
+[2023-02-20T21:38:31.305] [] INFO  ### stockCode : AAPL 
+[2023-02-20T21:46:29.268] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 6686 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T21:46:29.270] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T21:46:30.040] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T21:46:30.346] [] INFO  Started PioneerClientTest in 1.558 seconds (JVM running for 2.963) 
+[2023-02-20T21:46:30.955] [] INFO  ####### initialized server ### 
+[2023-02-20T21:46:30.956] [] INFO  9443 started on port: 9443 
+[2023-02-20T21:46:31.011] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T21:46:31.573] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "413db900-4f63-4d25-990d-8c29af0eb1b2",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  413db900-4f63-4d25-990d-8c29af0eb1b2
+ 
+[2023-02-20T21:46:31.632] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "443c90c2-2c76-405c-ac16-75e1512a5e4f",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  443c90c2-2c76-405c-ac16-75e1512a5e4f
+ 
+[2023-02-20T21:46:32.224] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T21:46:32.227] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "413db900-4f63-4d25-990d-8c29af0eb1b2",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T21:46:32.230] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  413db900-4f63-4d25-990d-8c29af0eb1b2
+ 
+[2023-02-20T21:46:32.249] [] INFO  ### stockCode : AAPL 
+[2023-02-20T21:47:07.957] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 7127 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T21:47:07.958] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T21:47:08.455] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T21:47:08.710] [] INFO  Started PioneerClientTest in 1.134 seconds (JVM running for 2.926) 
+[2023-02-20T21:47:09.259] [] INFO  ####### initialized server ### 
+[2023-02-20T21:47:09.261] [] INFO  9443 started on port: 9443 
+[2023-02-20T21:47:09.307] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T21:47:09.854] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "37e343c8-3d1f-4ec6-9d30-f10c44f8d76c",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  37e343c8-3d1f-4ec6-9d30-f10c44f8d76c
+ 
+[2023-02-20T21:47:09.922] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "0a185f1e-b915-4132-8194-1475926bcb01",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  0a185f1e-b915-4132-8194-1475926bcb01
+ 
+[2023-02-20T21:47:10.331] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T21:47:10.333] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "37e343c8-3d1f-4ec6-9d30-f10c44f8d76c",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T21:47:10.338] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  37e343c8-3d1f-4ec6-9d30-f10c44f8d76c
+ 
+[2023-02-20T21:47:10.361] [] INFO  ### stockCode : AAPL 
+[2023-02-20T21:50:59.295] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 9482 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T21:50:59.297] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T21:51:00.189] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T21:51:00.633] [] INFO  Started PioneerClientTest in 1.776 seconds (JVM running for 3.204) 
+[2023-02-20T21:51:01.250] [] INFO  ####### initialized server ### 
+[2023-02-20T21:51:01.251] [] INFO  9443 started on port: 9443 
+[2023-02-20T21:51:01.288] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T22:03:06.881] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 16962 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T22:03:06.886] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T22:03:07.349] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T22:03:07.571] [] INFO  Started PioneerClientTest in 1.024 seconds (JVM running for 2.228) 
+[2023-02-20T22:03:08.089] [] INFO  ####### initialized server ### 
+[2023-02-20T22:03:08.090] [] INFO  9443 started on port: 9443 
+[2023-02-20T22:03:08.126] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T22:03:08.653] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "c84fedb0-01e8-4c73-9f0a-e57a198afb9c",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  c84fedb0-01e8-4c73-9f0a-e57a198afb9c
+ 
+[2023-02-20T22:03:08.707] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "6b98c7e9-2277-47bc-8d90-b9df1f7b71b5",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  6b98c7e9-2277-47bc-8d90-b9df1f7b71b5
+ 
+[2023-02-20T22:03:09.471] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T22:03:09.473] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "c84fedb0-01e8-4c73-9f0a-e57a198afb9c",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T22:03:09.476] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  c84fedb0-01e8-4c73-9f0a-e57a198afb9c
+ 
+[2023-02-20T22:03:09.494] [] INFO  ### stockCode : AAPL 
+[2023-02-20T22:03:09.503] [] INFO  nothing JSON decoding error: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$OverseaPriceRequest$Response`; nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$OverseaPriceRequest$Response`
+ at [Source: (io.netty.buffer.ByteBufInputStream); line: 1, column: 43] 
+[2023-02-20T22:03:50.679] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 17412 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T22:03:50.680] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T22:03:51.136] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T22:03:51.386] [] INFO  Started PioneerClientTest in 1.05 seconds (JVM running for 2.344) 
+[2023-02-20T22:03:51.883] [] INFO  ####### initialized server ### 
+[2023-02-20T22:03:51.884] [] INFO  9443 started on port: 9443 
+[2023-02-20T22:03:51.935] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T22:04:55.721] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 18103 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T22:04:55.723] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T22:04:56.221] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T22:04:56.482] [] INFO  Started PioneerClientTest in 1.137 seconds (JVM running for 2.581) 
+[2023-02-20T22:04:57.045] [] INFO  ####### initialized server ### 
+[2023-02-20T22:04:57.046] [] INFO  9443 started on port: 9443 
+[2023-02-20T22:04:57.099] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T22:05:57.071] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 18780 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T22:05:57.072] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T22:05:57.566] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T22:05:57.825] [] INFO  Started PioneerClientTest in 1.126 seconds (JVM running for 2.578) 
+[2023-02-20T22:05:58.386] [] INFO  ####### initialized server ### 
+[2023-02-20T22:05:58.388] [] INFO  9443 started on port: 9443 
+[2023-02-20T22:05:58.439] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T22:05:58.977] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "cdadd2fa-65b2-465e-8515-286e5b8bc3b9",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  cdadd2fa-65b2-465e-8515-286e5b8bc3b9
+ 
+[2023-02-20T22:05:59.041] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "c53a44a4-8c40-468e-ac52-2a7bdeec9bd9",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  c53a44a4-8c40-468e-ac52-2a7bdeec9bd9
+ 
+[2023-02-20T22:05:59.631] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T22:05:59.633] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "cdadd2fa-65b2-465e-8515-286e5b8bc3b9",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T22:05:59.638] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  cdadd2fa-65b2-465e-8515-286e5b8bc3b9
+ 
+[2023-02-20T22:05:59.664] [] INFO  ### stockCode : AAPL 
+[2023-02-20T22:14:00.142] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 23698 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T22:14:00.143] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T22:14:00.641] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3S) 
+[2023-02-20T22:14:00.903] [] INFO  Started PioneerClientTest in 1.12 seconds (JVM running for 2.676) 
+[2023-02-20T22:14:01.476] [] INFO  ####### initialized server ### 
+[2023-02-20T22:14:01.477] [] INFO  9443 started on port: 9443 
+[2023-02-20T22:14:01.531] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T22:17:43.460] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 26038 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T22:17:43.461] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T22:17:43.961] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT20S) 
+[2023-02-20T22:17:44.226] [] INFO  Started PioneerClientTest in 1.133 seconds (JVM running for 2.487) 
+[2023-02-20T22:17:44.810] [] INFO  ####### initialized server ### 
+[2023-02-20T22:17:44.811] [] INFO  9443 started on port: 9443 
+[2023-02-20T22:17:44.858] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T22:18:49.371] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 26715 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T22:18:49.373] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T22:18:50.028] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3M20S) 
+[2023-02-20T22:18:50.599] [] INFO  Started PioneerClientTest in 1.7 seconds (JVM running for 3.058) 
+[2023-02-20T22:18:52.227] [] INFO  9443 started on port: 9443 
+[2023-02-20T22:18:52.225] [] INFO  ####### initialized server ### 
+[2023-02-20T22:18:52.351] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T22:19:12.463] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "11f59119-9f9c-4122-8d0d-92659b854453",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  11f59119-9f9c-4122-8d0d-92659b854453
+ 
+[2023-02-20T22:21:03.683] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 28074 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T22:21:03.684] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T22:21:04.163] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3M20S) 
+[2023-02-20T22:21:04.414] [] INFO  Started PioneerClientTest in 1.073 seconds (JVM running for 2.421) 
+[2023-02-20T22:21:04.959] [] INFO  ####### initialized server ### 
+[2023-02-20T22:21:04.960] [] INFO  9443 started on port: 9443 
+[2023-02-20T22:21:05.004] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T22:45:57.377] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 43453 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T22:45:57.379] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T22:45:57.878] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3M20S) 
+[2023-02-20T22:45:58.154] [] INFO  Started PioneerClientTest in 1.147 seconds (JVM running for 2.657) 
+[2023-02-20T22:45:58.773] [] INFO  ####### initialized server ### 
+[2023-02-20T22:45:58.775] [] INFO  9443 started on port: 9443 
+[2023-02-20T22:45:58.825] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T22:45:59.459] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "6858eae1-df33-4f78-b2b6-f58f0ce0fe32",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  6858eae1-df33-4f78-b2b6-f58f0ce0fe32
+ 
+[2023-02-20T22:45:59.525] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "1db59285-0614-4fa4-bf52-07533ad4c1cd",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  1db59285-0614-4fa4-bf52-07533ad4c1cd
+ 
+[2023-02-20T22:46:00.342] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T22:46:00.344] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "6858eae1-df33-4f78-b2b6-f58f0ce0fe32",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T22:46:00.349] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  6858eae1-df33-4f78-b2b6-f58f0ce0fe32
+ 
+[2023-02-20T22:46:00.373] [] INFO  ### stockCode : AAPL 
+[2023-02-20T22:47:18.062] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 44340 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T22:47:18.064] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T22:47:18.705] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3M20S) 
+[2023-02-20T22:47:19.017] [] INFO  Started PioneerClientTest in 1.332 seconds (JVM running for 2.807) 
+[2023-02-20T22:47:19.928] [] INFO  ####### initialized server ### 
+[2023-02-20T22:47:19.930] [] INFO  9443 started on port: 9443 
+[2023-02-20T22:47:20.019] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T22:50:36.183] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 46373 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T22:50:36.184] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T22:50:36.669] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3M20S) 
+[2023-02-20T22:50:36.933] [] INFO  Started PioneerClientTest in 1.107 seconds (JVM running for 2.477) 
+[2023-02-20T22:50:37.516] [] INFO  ####### initialized server ### 
+[2023-02-20T22:50:37.517] [] INFO  9443 started on port: 9443 
+[2023-02-20T22:50:37.562] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T22:51:40.148] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 47052 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T22:51:40.149] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T22:51:40.664] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3M20S) 
+[2023-02-20T22:51:40.928] [] INFO  Started PioneerClientTest in 1.141 seconds (JVM running for 2.528) 
+[2023-02-20T22:51:41.511] [] INFO  ####### initialized server ### 
+[2023-02-20T22:51:41.512] [] INFO  9443 started on port: 9443 
+[2023-02-20T22:51:41.557] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T22:52:05.504] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 47279 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T22:52:05.505] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T22:52:05.973] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3M20S) 
+[2023-02-20T22:52:06.221] [] INFO  Started PioneerClientTest in 1.068 seconds (JVM running for 2.443) 
+[2023-02-20T22:52:06.726] [] INFO  ####### initialized server ### 
+[2023-02-20T22:52:06.727] [] INFO  9443 started on port: 9443 
+[2023-02-20T22:52:06.778] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T22:52:07.288] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "2e121c0e-1e64-418c-a767-7ff945862432",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  2e121c0e-1e64-418c-a767-7ff945862432
+ 
+[2023-02-20T22:52:07.354] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "cfb2c4bc-34c6-4eb4-8f5c-110432b790fd",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  cfb2c4bc-34c6-4eb4-8f5c-110432b790fd
+ 
+[2023-02-20T22:52:08.152] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T22:52:08.154] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "2e121c0e-1e64-418c-a767-7ff945862432",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T22:52:08.157] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  2e121c0e-1e64-418c-a767-7ff945862432
+ 
+[2023-02-20T22:52:08.175] [] INFO  ### stockCode : AAPL 
+[2023-02-20T22:52:37.512] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 47623 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T22:52:37.513] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T22:52:37.993] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3M20S) 
+[2023-02-20T22:52:38.340] [] INFO  Started PioneerClientTest in 1.225 seconds (JVM running for 2.603) 
+[2023-02-20T22:52:38.927] [] INFO  ####### initialized server ### 
+[2023-02-20T22:52:38.928] [] INFO  9443 started on port: 9443 
+[2023-02-20T22:52:38.974] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T22:52:39.646] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "1d2cc38d-05b1-435a-bf5a-26eff4d40b22",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  1d2cc38d-05b1-435a-bf5a-26eff4d40b22
+ 
+[2023-02-20T22:52:39.748] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "04ab4e8e-0169-4be7-b15a-82cb6bced1df",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  04ab4e8e-0169-4be7-b15a-82cb6bced1df
+ 
+[2023-02-20T22:52:40.273] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T22:52:40.287] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "1d2cc38d-05b1-435a-bf5a-26eff4d40b22",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T22:52:40.301] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  1d2cc38d-05b1-435a-bf5a-26eff4d40b22
+ 
+[2023-02-20T22:52:40.323] [] INFO  ### stockCode : AAPL 
+[2023-02-20T22:52:40.331] [] INFO  ### 13.1123, 5 
+[2023-02-20T22:52:40.351] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/domestic",
+    "queryStringParameters" : {
+      "fid_input_iscd" : [ "12393" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T22:52:40.352] [] INFO  ### stockCode : null 
+[2023-02-20T22:52:40.353] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/domestic",
+    "queryStringParameters" : {
+      "fid_input_iscd" : [ "12393" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ didn't match expectation:
+
+  {
+    "id" : "1d2cc38d-05b1-435a-bf5a-26eff4d40b22",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ because:
+
+  method matched
+  path didn't match
+ 
+[2023-02-20T22:52:40.355] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/domestic",
+    "queryStringParameters" : {
+      "fid_input_iscd" : [ "12393" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "04ab4e8e-0169-4be7-b15a-82cb6bced1df",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T22:53:03.403] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/domestic",
+    "queryStringParameters" : {
+      "fid_input_iscd" : [ "12393" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}"
+  }
+
+ from expectation:
+
+  04ab4e8e-0169-4be7-b15a-82cb6bced1df
+ 
+[2023-02-20T22:53:13.288] [] INFO  nothing JSON decoding error: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$DomesticPriceRequest$Response`; nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$DomesticPriceRequest$Response`
+ at [Source: (io.netty.buffer.ByteBufInputStream); line: 1, column: 34] 
+[2023-02-20T22:54:38.716] [] INFO  Starting PioneerClientTest using Java 17.0.1 on brandonkwon.local with PID 48965 (started by kakao in /Users/kakao/yjgit/kotlinPractice/practice) 
+[2023-02-20T22:54:38.717] [] INFO  The following 1 profile is active: "prod" 
+[2023-02-20T22:54:39.164] [] INFO  Initializing HantooClient with ClientProperties(enable=true, server=http://localhost:9443, timeout=PT3M20S) 
+[2023-02-20T22:54:39.386] [] INFO  Started PioneerClientTest in 1.318 seconds (JVM running for 2.621) 
+[2023-02-20T22:54:39.886] [] INFO  ####### initialized server ### 
+[2023-02-20T22:54:39.887] [] INFO  9443 started on port: 9443 
+[2023-02-20T22:54:39.921] [] INFO  response string : {"stockCd":"AAPL","overseaPrice":"13.1123"} 1(") 
+[2023-02-20T22:54:40.444] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "dfe041a5-273d-4817-86b8-f2207b48cd38",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  dfe041a5-273d-4817-86b8-f2207b48cd38
+ 
+[2023-02-20T22:54:40.503] [] INFO  9443 creating expectation:
+
+  {
+    "id" : "b794796f-630c-4136-8feb-b40735132d6a",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ with id:
+
+  b794796f-630c-4136-8feb-b40735132d6a
+ 
+[2023-02-20T22:54:41.110] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T22:54:41.113] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "dfe041a5-273d-4817-86b8-f2207b48cd38",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T22:54:41.117] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/oversea",
+    "queryStringParameters" : {
+      "symb" : [ "AAPL" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}"
+  }
+
+ from expectation:
+
+  dfe041a5-273d-4817-86b8-f2207b48cd38
+ 
+[2023-02-20T22:54:41.136] [] INFO  ### stockCode : AAPL 
+[2023-02-20T22:54:41.143] [] INFO  ### 13.1123, 5 
+[2023-02-20T22:54:41.166] [] INFO  9443 received request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/domestic",
+    "queryStringParameters" : {
+      "fid_input_iscd" : [ "12393" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+ 
+[2023-02-20T22:54:41.168] [] INFO  ### stockCode : null 
+[2023-02-20T22:54:41.168] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/domestic",
+    "queryStringParameters" : {
+      "fid_input_iscd" : [ "12393" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ didn't match expectation:
+
+  {
+    "id" : "dfe041a5-273d-4817-86b8-f2207b48cd38",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/oversea",
+      "queryStringParameters" : {
+        "symb" : [ "AAPL" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"stockCd\":\"AAPL\",\"overseaPrice\":\"13.1123\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+
+ because:
+
+  method matched
+  path didn't match
+ 
+[2023-02-20T22:54:41.170] [] INFO  9443 request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/domestic",
+    "queryStringParameters" : {
+      "fid_input_iscd" : [ "12393" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ matched expectation:
+
+  {
+    "id" : "b794796f-630c-4136-8feb-b40735132d6a",
+    "priority" : 0,
+    "httpRequest" : {
+      "method" : "GET",
+      "path" : "/price/domestic",
+      "queryStringParameters" : {
+        "fid_input_iscd" : [ "12393" ]
+      }
+    },
+    "times" : {
+      "unlimited" : true
+    },
+    "timeToLive" : {
+      "unlimited" : true
+    },
+    "httpResponse" : {
+      "statusCode" : 200,
+      "body" : {
+        "type" : "STRING",
+        "string" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}",
+        "contentType" : "application/json; charset=utf-8"
+      }
+    }
+  }
+ 
+[2023-02-20T22:54:41.172] [] INFO  9443 returning response:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}"
+  }
+
+ for request:
+
+  {
+    "method" : "GET",
+    "path" : "/price/domestic",
+    "queryStringParameters" : {
+      "fid_input_iscd" : [ "12393" ]
+    },
+    "headers" : {
+      "accept-encoding" : [ "gzip" ],
+      "user-agent" : [ "ReactorNetty/1.0.27" ],
+      "host" : [ "localhost:9443" ],
+      "accept" : [ "*/*" ],
+      "contentType" : [ "application/json" ],
+      "Connection" : [ "close" ],
+      "content-length" : [ "0" ]
+    },
+    "keepAlive" : false,
+    "secure" : false
+  }
+
+ for action:
+
+  {
+    "statusCode" : 200,
+    "body" : "{\"price\":\"12393\",\"priceUnit\":\"10\"}"
+  }
+
+ from expectation:
+
+  b794796f-630c-4136-8feb-b40735132d6a
+ 
+[2023-02-20T22:54:41.180] [] INFO  nothing JSON decoding error: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$DomesticPriceRequest$Response`; nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Unexpected end-of-input when trying read value of type `com.brandon.practice.client.PriceApiTemplate$DomesticPriceRequest$Response`
+ at [Source: (io.netty.buffer.ByteBufInputStream); line: 1, column: 34] 
