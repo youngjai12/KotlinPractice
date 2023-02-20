@@ -1,6 +1,8 @@
 package com.brandon.practice.hantoo
 
+import com.brandon.practice.client.PriceApiTemplate
 import com.brandon.practice.domain.DomesticHantooPrice
+import com.brandon.practice.domain.OverseaHantooPrice
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.http.HttpMethod
 import org.springframework.http.MediaType
@@ -62,6 +64,53 @@ interface HantooPriceTemplate {
 
         override fun header(): Header = header
 
+        override fun request(): Request = request
+    }
+
+    data class OverseaPriceRequest(
+        val request: OverseaPriceRequest.Request,
+        val header: OverseaPriceRequest.Header
+    ): ApiTemplate<OverseaPriceRequest.Response, OverseaPriceRequest.Request, OverseaPriceRequest.Header> {
+        class Response(
+            @JsonProperty("output")
+            val stockPriceDetail: OverseaHantooPrice.Output,
+            val rt_cd: String,
+            val msg_cd: String,
+            val msg1: String? = null
+        ): ApiResponse, PriceResponse {
+            override fun currentPrice(): String = stockPriceDetail.last ?: "-1"
+            override fun priceUnit(): String {
+                return if(currentPrice().toDouble() > 10.0) {
+                    "5"
+                } else {
+                    "10"
+                }
+            }
+        }
+
+        class Request(
+            @JsonProperty("AUTH")
+            val auth: String = "",
+            @JsonProperty("EXCD")
+            val excd: String,
+            @JsonProperty("SYMB")
+            val symb: String
+        ): ApiRequest
+
+        class Header(
+            @JsonProperty("Content-Type")
+            val contentType: String = MediaType.APPLICATION_JSON_VALUE,
+            val authorization: String,
+//            @JsonProperty("Connection")
+//            val connection: String = "close",
+            val appkey: String,
+            val appsecret: String,
+            val tr_id: String = "HHDFS00000300"
+        ): ApiHeader
+
+        override fun path(): String = "uapi/overseas-price/v1/quotations/price"
+        override fun method(): HttpMethod = HttpMethod.GET
+        override fun header(): Header = header
         override fun request(): Request = request
     }
 
