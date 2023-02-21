@@ -1,6 +1,11 @@
 client:
   pioneer:
-    enable: true
+    enable: false
     # server: https://openapi.koreainvestment.com:9443
     server: http://localhost:9443
     timeout: 200s
+  hantoo:
+    enable: true
+    server: https://openapi.koreainvestment.com:9443
+    timeout: 20s
+
