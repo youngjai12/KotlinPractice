@@ -1,10 +1,9 @@
-package com.brandon.practice.domain
+package com.brandon.practice.module
 
 import com.brandon.practice.client.PriceApiTemplate
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.JsonDeserializer
-import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
 
@@ -18,7 +17,7 @@ class PriceInfoDeserializer : JsonDeserializer<PriceApiTemplate.PriceResponseTem
         logger.info("### stockCode : ${stockCode}")
 
         val d: JsonParser? = node?.traverse().also { it?.nextToken() }
-        
+
         return when (stockCode?.matches("[a-zA-Z]+".toRegex())) {
              true -> ctxt.readValue(node.traverse().also { it.nextToken() }, PriceApiTemplate.OverseaPriceRequest.Response::class.java)
             //true -> ctxt.readValue(node.traverse(), PriceApiTemplate.OverseaPriceRequest.Response::class.java)
