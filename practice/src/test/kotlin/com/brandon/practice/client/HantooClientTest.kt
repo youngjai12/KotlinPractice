@@ -44,6 +44,14 @@ class HantooClientTest {
             )
         )
 
+        val overseaPriceRequest = OverseaPriceRequest(
+            request = OverseaPriceRequest.Request(excd = "NAS", symb = "AAPL"),
+            header = OverseaPriceRequest.Header(
+                authorization = "Bearer ${accessToken}",
+                appkey = appkey, appsecret = appsecret
+            )
+        )
+
         val priceMono = hantooClient.getPrice(domesticPriceRequest)
         val tmpPriceInfo: PriceResponse? = priceMono.block()
         val priceInfo = tmpPriceInfo?.currentPrice()
@@ -51,6 +59,12 @@ class HantooClientTest {
 
         logger.info("### ${priceInfo}, $priceUnit")
 
+        val overseaPriceMono = hantooClient.getPrice(overseaPriceRequest)
+        val overseaTmpPriceInfo: PriceResponse? = overseaPriceMono.block()
+        val overseaPriceInfo = overseaTmpPriceInfo?.currentPrice()
+        val oversesaPriceUnit = tmpPriceInfo?.priceUnit()
+
+        logger.info("### ${overseaPriceInfo}, $oversesaPriceUnit")
 
     }
 }
