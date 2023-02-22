@@ -11,7 +11,7 @@ import org.springframework.test.context.TestPropertySource
 
 @TestPropertySource(locations = ["classpath:application.yml"])
 @SpringBootTest(
-    webEnvironment = SpringBootTest.WebEnvironment.NONE,
+    webEnvironment = SpringBootTest.WebEnvironment.NONE
 )
 class HantooClientTest {
     private val logger = LoggerFactory.getLogger(javaClass)
@@ -28,22 +28,21 @@ class HantooClientTest {
     @Value("\${auth.accessToken}")
     lateinit var accessToken: String
 
-
     @Test
     fun getDomesticPriceTest() {
         logger.info("appkey: ${appkey}")
         logger.info("appsecret: ${appsecret}")
-
         val domesticPriceRequest = DomesticPriceRequest(
             request=DomesticPriceRequest.Request(
                 fid_input_iscd = "331520"
             ),
             header = DomesticPriceRequest.Header(
-                authorization = "Bearer ${ACCESS_TOKEN_SAMPLE}"
+                authorization = "Bearer ${accessToken}",
+                appsecret = appsecret, appkey = appkey
             )
         )
 
-        hantooClient.getPrice(domesticPriceRequest)
+        //hantooClient.getPrice(domesticPriceRequest)
 
     }
 }

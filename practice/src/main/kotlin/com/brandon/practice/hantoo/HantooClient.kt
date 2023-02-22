@@ -47,8 +47,8 @@ class HantooClient(
         .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
         .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
 
-    fun <Res: PriceApiTemplate.ApiResponse, Req: PriceApiTemplate.ApiRequestBody, H: PriceApiTemplate.ApiHeader>
-            getPrice(request: PriceApiTemplate.ApiTemplate<Res, Req, H>) : Mono<PriceApiTemplate.PriceResponseTemplate> {
+    fun <Res: HantooPriceTemplate.ApiResponse, Req: HantooPriceTemplate.ApiRequest, H: HantooPriceTemplate.ApiHeader>
+            getPrice(request: HantooPriceTemplate.ApiTemplate<Res, Req, H>) : Mono<PriceApiTemplate.PriceResponseTemplate> {
         val headerType = object: TypeReference<Map<String, String>>(){}
         val header = mapper.convertValue(request.header(), headerType)
 
