@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.slf4j.LoggerFactory
 import com.brandon.practice.client.PriceApiTemplate.*
-import com.brandon.practice.domain.PriceInfoDeserializer
+import com.brandon.practice.module.PriceInfoDeserializer
 import com.fasterxml.jackson.databind.module.SimpleModule
 import org.springframework.core.ResolvableType
 import org.springframework.http.HttpHeaders
@@ -53,7 +53,8 @@ class PioneerClient(
     private val mapper: ObjectMapper = jacksonObjectMapper()
         .registerModule(
             SimpleModule().addDeserializer(PriceResponseTemplate::class.java,
-                PriceInfoDeserializer())
+                PriceInfoDeserializer()
+            )
         )
         .setSerializationInclusion(JsonInclude.Include.NON_NULL)
         .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)

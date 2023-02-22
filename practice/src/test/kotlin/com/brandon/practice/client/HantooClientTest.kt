@@ -1,6 +1,7 @@
 package com.brandon.practice.client
 
 import com.brandon.practice.hantoo.HantooClient
+import com.brandon.practice.hantoo.HantooPriceTemplate
 import com.brandon.practice.hantoo.HantooPriceTemplate.*
 import org.junit.jupiter.api.Test
 import org.slf4j.LoggerFactory
@@ -44,7 +45,7 @@ class HantooClientTest {
         )
 
         val priceMono = hantooClient.getPrice(domesticPriceRequest)
-        val tmpPriceInfo: PriceApiTemplate.PriceResponseTemplate? = priceMono.block()
+        val tmpPriceInfo: PriceResponse? = priceMono.block()
         val priceInfo = tmpPriceInfo?.currentPrice()
         val priceUnit = tmpPriceInfo?.priceUnit()
 

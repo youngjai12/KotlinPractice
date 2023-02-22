@@ -2,6 +2,7 @@ package com.brandon.practice.testModule
 
 import com.brandon.practice.client.PriceApiTemplate
 import com.brandon.practice.domain.*
+import com.brandon.practice.module.PriceInfoDeserializer
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule

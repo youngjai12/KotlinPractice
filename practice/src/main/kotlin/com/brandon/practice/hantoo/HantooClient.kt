@@ -1,7 +1,7 @@
 package com.brandon.practice.hantoo
 
-import com.brandon.practice.client.PriceApiTemplate
-import com.brandon.practice.domain.PriceInfoDeserializer
+
+import com.brandon.practice.module.HantooPriceInfoDeserializer
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.DeserializationFeature
@@ -39,8 +39,7 @@ class HantooClient(
     private val mapper: ObjectMapper = jacksonObjectMapper()
         .registerModule(
             SimpleModule().addDeserializer(
-                PriceApiTemplate.PriceResponseTemplate::class.java,
-                PriceInfoDeserializer()
+                HantooPriceTemplate.PriceResponse::class.java, HantooPriceInfoDeserializer()
             )
         )
         .setSerializationInclusion(JsonInclude.Include.NON_NULL)
@@ -48,7 +47,7 @@ class HantooClient(
         .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
 
     fun <Res: HantooPriceTemplate.ApiResponse, Req: HantooPriceTemplate.ApiRequest, H: HantooPriceTemplate.ApiHeader>
-            getPrice(request: HantooPriceTemplate.ApiTemplate<Res, Req, H>) : Mono<PriceApiTemplate.PriceResponseTemplate> {
+            getPrice(request: HantooPriceTemplate.ApiTemplate<Res, Req, H>) : Mono<HantooPriceTemplate.PriceResponse> {
         val headerType = object: TypeReference<Map<String, String>>(){}
         val header = mapper.convertValue(request.header(), headerType)
 
@@ -68,9 +67,9 @@ class HantooClient(
                     .queryParams(formData).build() }
             .retrieve()
             .onStatus(HttpStatus::is5xxServerError){
-                it.bodyToMono(PriceApiTemplate.PostException::class.java)
+                it.bodyToMono(HantooPriceTemplate.PostException::class.java)
             }
-            .bodyToMono(PriceApiTemplate.PriceResponseTemplate::class.java)
+            .bodyToMono(HantooPriceTemplate.PriceResponse::class.java)
 
     }
 }

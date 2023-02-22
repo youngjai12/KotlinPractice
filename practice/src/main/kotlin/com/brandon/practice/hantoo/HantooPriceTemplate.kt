@@ -114,5 +114,14 @@ interface HantooPriceTemplate {
         override fun request(): Request = request
     }
 
+    data class PostException(
+        @JsonProperty("rt_cd")
+        val rtCdd: String? ,
+        @JsonProperty("msg_cd")
+        val msgCdd: String?,
+        @JsonProperty("msg1")
+        val msg22: String?
+    ): RuntimeException()
+
 
 }
