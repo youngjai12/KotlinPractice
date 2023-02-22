@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestPropertySource
+import reactor.core.publisher.Mono
 
 @TestPropertySource(locations = ["classpath:application.yml"])
 @SpringBootTest(
@@ -42,7 +43,13 @@ class HantooClientTest {
             )
         )
 
-        //hantooClient.getPrice(domesticPriceRequest)
+        val priceMono = hantooClient.getPrice(domesticPriceRequest)
+        val tmpPriceInfo: PriceApiTemplate.PriceResponseTemplate? = priceMono.block()
+        val priceInfo = tmpPriceInfo?.currentPrice()
+        val priceUnit = tmpPriceInfo?.priceUnit()
+
+        logger.info("### ${priceInfo}, $priceUnit")
+
 
     }
 }
