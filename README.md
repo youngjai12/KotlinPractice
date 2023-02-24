@@ -4,7 +4,10 @@ Test 코드를 잘 만듬으로써 시험해보는 경우도 많은데, 이떄 m
 
 ## 다뤘던 내용 (기술적인 test) 
 #### autoConfiguration 
-* webclient 는 같지만, 하나는 로컬, 하나는 외부로 해서 client 설정이 다른것 
+
+* webclient 는 같지만, 하나는 로컬, 하나는 외부로 해서 client 설정이 다른것         
+   -> 이때 서로다른 config POJO인데, 합쳐서 bean으로 등록하려하면, 컴파일오류는 안나지만, 잘안됨.          
+   -> 그래서 결국 서로다른 config이면 그냥 다른파일로, 다른 객체로 분리해야함. 
 * Test시에 secret한 내용들 하드코딩하지 않고, .yml로 정의된것 load해서 쓰기 
 
 #### interface & subclass 
