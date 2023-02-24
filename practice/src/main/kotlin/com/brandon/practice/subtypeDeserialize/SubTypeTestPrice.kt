@@ -15,7 +15,7 @@ interface SubTypeTestPrice {
     @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
-        property = "type")
+        property = "market")
     @JsonSubTypes(
         JsonSubTypes.Type(value = DomesticPriceRequest.Response::class, name = "domestic"),
         JsonSubTypes.Type(value = OverseaPriceRequest.Response::class, name = "oversea")
@@ -43,7 +43,7 @@ interface SubTypeTestPrice {
         class Response(
             val price: String,
             val priceUnit: String,
-            val type: String?  // 아래 class와 비교시, 구분가능한 field임.
+            val market: String?  // 아래 class와 비교시, 구분가능한 field임.
         ): ApiResponse, PriceResponseTemplate {
             override fun currentPrice() = price
             override fun priceUnit() = priceUnit
@@ -74,7 +74,7 @@ interface SubTypeTestPrice {
         class Response(
             val stockCd: String,
             val overseaPrice: String,
-            val type: String?  // 아래 class와 비교시, 구분가능한 field임.
+            val market: String?  // 아래 class와 비교시, 구분가능한 field임.
         ): ApiResponse, PriceResponseTemplate {
             override fun currentPrice() = overseaPrice
             override fun priceUnit(): String {

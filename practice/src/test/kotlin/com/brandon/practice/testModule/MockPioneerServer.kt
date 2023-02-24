@@ -42,7 +42,7 @@ class MockPioneerServer {
 
     fun getDomesticPrice(stockCd: String) {
 
-        val priceResponse = StockPriceInfoWithType(price = "12393", priceUnit = "10", type= "domestic")
+        val priceResponse = StockPriceInfoWithType(price = "12393", priceUnit = "10", market= "domestic")
         val responseString = mapper.writeValueAsString(priceResponse)
 
         mockServer.`when`(
@@ -95,7 +95,7 @@ class MockPioneerServer {
     }
 
     fun getOverseaPrice(stockCd: String) {
-        val priceResponse = OverseaStockPriceWithType(stockCd = stockCd, overseaPrice = "13.1", type= "oversea")
+        val priceResponse = OverseaStockPriceWithType(stockCd = stockCd, overseaPrice = "13.1", market= "oversea")
         val responseString = mapper.writeValueAsString(priceResponse)
 
         mockServer.`when`(
