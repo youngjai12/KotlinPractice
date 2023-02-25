@@ -88,6 +88,32 @@ class PioneerClient(
     }
 
     fun <Res: ApiResponse, Req: ApiRequestBody, H: ApiHeader>
+            getPriceWithType(request: ApiTemplate<Res, Req, H>) : Mono<PriceResponseTemplate> {
+        val headerType = object: TypeReference<Map<String, String>>(){}
+        val header = mapper.convertValue(request.header(), headerType)
+
+        val reqBodyType = object: TypeReference<Map<String, String>>() {}
+        val reqBody = mapper.convertValue(request.request(), reqBodyType)
+        val formData = LinkedMultiValueMap<String, String>()
+        reqBody.forEach { (k, v) -> formData.add(k, v) }
+
+        return WebClient.builder()
+            .defaultHeaders{ it.addAll(makeHeaders(header)) }
+            .baseUrl(clientProperties.server)
+            .build()
+            .method(request.method())
+            .uri{ builder: UriBuilder ->
+                builder.path(request.path())
+                    .queryParams(formData).build() }
+            .retrieve()
+            .onStatus(HttpStatus::is5xxServerError){
+                it.bodyToMono(PostException::class.java)
+            }
+            .bodyToMono(PriceResponseTemplate::class.java)
+
+    }
+
+    fun <Res: ApiResponse, Req: ApiRequestBody, H: ApiHeader>
             getPrice(request: ApiTemplate<Res, Req, H>) : Mono<PriceResponseTemplate> {
         val headerType = object: TypeReference<Map<String, String>>(){}
         val header = mapper.convertValue(request.header(), headerType)

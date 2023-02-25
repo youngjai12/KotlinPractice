@@ -8,4 +8,13 @@ client:
     enable: true
     server: https://openapi.koreainvestment.com:9443
     timeout: 20s
+user:
+  appkey:
+    youngjai: PS9MS8trBNQtmm1CLaXEEqFA5iJDmtDOZBPc
+    purestar: soongue_appkey
+  appsecret:
+    - youngjai: bjEq1dbwO/Ort1ET0KaJxJ3suCgR2iA5ME9QCOnZV9AiSyRCrEESo75DrSsQJ0nIar2EgW7QwUv8tuBXiKnykTzT+Yij3ecKYaRW2L2jGz5oLogJY/P68s4sFhJ9Ds9aShL5N2qSLUJRttt2hH73lj67ro4Fworov0itXSFZ+z5lGisrAFQ=
+    - purestar: soongue_appsecret
+  accesstoken:
+    - youngjai:
 
