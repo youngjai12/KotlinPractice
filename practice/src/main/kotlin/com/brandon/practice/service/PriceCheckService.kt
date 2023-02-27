@@ -8,8 +8,11 @@ class PriceCheckService(
 ) {
 
     val MIXED_STOCK_SAMPLE = listOf("002420", "002820", "006880", "008500",
-        "021040", "033250", "066790", "079190", "083660", "101400",
-       "104460", "110020", "134380", "140910", "AAPL", "191410", "263920")
+        "MSFT", "033250", "079190", "INTC", "101400")
+
+    val MIXED_STOCK_SAMPLE_V2 = listOf("104460", "110020", "NVDA", "140910", "AAPL", "191410", "263920")
+    val MIXED_STOCK_SAMPLE_V3 = listOf("001820", "006340", "REGN", "039560", "META", "066430", "AMZN")
+
 
 
 //    fun getPriceMono(stockCd: String) {
