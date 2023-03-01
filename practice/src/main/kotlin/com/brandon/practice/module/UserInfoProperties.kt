@@ -11,7 +11,7 @@ class UserInfoProperties (
 
     //
     val appsecret: List<Map<String, String>>,
-    val accesstoken: List<Map<String, String>>
+    val accesstoken: Map<String, String>
 ) {
     fun getAppSecret(acctId: String): String? {
        for (item in appsecret) {
@@ -20,5 +20,13 @@ class UserInfoProperties (
            }
        }
         return null
+    }
+
+    fun getAppKey(acctId: String): String? {
+        return appkey[acctId]
+    }
+
+    fun getAccessToken(acctId: String): String? {
+        return accesstoken[acctId]
     }
 }
