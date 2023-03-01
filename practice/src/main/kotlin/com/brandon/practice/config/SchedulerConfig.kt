@@ -14,14 +14,14 @@ import java.util.concurrent.ScheduledExecutorService
 class SchedulerConfig : SchedulingConfigurer {
 
     companion object{
-        val POOL_SIZE = 2
+        val POOL_SIZE = 5
     }
 
     @Bean
-    fun priceCheckScheduler(): ScheduledExecutorService = Executors.newScheduledThreadPool(POOL_SIZE)
+    fun customizedScheduler(): ScheduledExecutorService = Executors.newScheduledThreadPool(POOL_SIZE)
 
     override fun configureTasks(taskRegistrar: ScheduledTaskRegistrar) {
-        taskRegistrar.setScheduler(priceCheckScheduler())
+        taskRegistrar.setScheduler(customizedScheduler())
     }
 
 }

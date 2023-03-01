@@ -1,34 +1,69 @@
 package com.brandon.practice.service
 
+
+import com.brandon.practice.config.SchedulerConfig
+import com.brandon.practice.domain.PriceAt
 import com.brandon.practice.hantoo.HantooClient
 import com.brandon.practice.hantoo.HantooPriceTemplate
 import org.slf4j.LoggerFactory
-import com.brandon.practice.domain.PriceAt
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 
 class PriceCheckService(
     val hantooClient: HantooClient,
-) {
+    val userInfo: UserInfoProperties,
+    var priceCheckScheduler: ScheduledExecutorService
+): CronService {
     private val logger = LoggerFactory.getLogger(javaClass)
     private val currentPriceInfo = ConcurrentHashMap<String, PriceAt>()
 
-    val CHUNK_SIZE = 10
-
+   val CHUNK_SIZE = 10
 
     companion object{
-        val MIXED_STOCK_SAMPLE = listOf("002420", "002820", "006880", "008500",
-            "MSFT", "033250", "079190", "INTC", "101400")
-
+        val MIXED_STOCK_SAMPLE = listOf("002420", "002820", "006880", "008500", "MSFT", "033250", "079190", "INTC", "101400")
         val MIXED_STOCK_SAMPLE_V2 = listOf("104460", "110020", "NVDA", "140910", "AAPL", "191410", "263920")
         val MIXED_STOCK_SAMPLE_V3 = listOf("001820", "006340", "REGN", "039560", "META", "066430", "AMZN")
-
+        val MIXED_STOCK_SAMPLE_V4 = listOf("010100", "016580", "AVGO", "036670", "036800", "ASML", "TSLA", "023910")
+    }
+      init{
+        restartScheduler(initial = true)
     }
 
-    fun stockMonitorAssign(acctId: String): List<String> {
-        return when(acctId){
+    final override fun restartScheduler(initial: Boolean) {
+        val acctIdList = listOf("youngjai", "hwang1", "purestar", "shantf2")
+        if(!initial){
+            logger.info("### this scheduler ${priceCheckScheduler.toString()}")
+            shutDown()
+            logger.info("[PriceCheckService] scheduler shutDown?(${priceCheckScheduler.isShutdown})")
+            if(priceCheckScheduler.isShutdown){
+                priceCheckScheduler =  Executors.newScheduledThreadPool(SchedulerConfig.POOL_SIZE)
+            }
+
+        }
+        logger.info("[PriceCheckService] restart Scheduler: ${priceCheckScheduler.toString()}")
+        acctIdList.forEach { acctId ->
+            val stockList = stockMonitorAssign(acctId)
+            priceCheckScheduler.scheduleAtFixedRate({ priceCollect(stockList, acctId) },
+                0L, 10L, TimeUnit.MILLISECONDS)
+        }
+    }
+
+    override fun shutDown() {
+        logger.info("[PriceCheck Service] toShutDown Scheduler: ${priceCheckScheduler.toString()}")
+        if(!priceCheckScheduler.isShutdown){
+            logger.info("[PriceCheck Service] shutdown")
+            priceCheckScheduler.shutdown()
+        }
+    }
+
+    private fun stockMonitorAssign(acctId: String): List<String> {
+      return when(acctId){
             "youngjai" -> MIXED_STOCK_SAMPLE
             "purestar" -> MIXED_STOCK_SAMPLE_V2
             "hwang1" -> MIXED_STOCK_SAMPLE_V3
+            "shantf2" -> MIXED_STOCK_SAMPLE_V4
             else -> listOf("null")
         }
     }
@@ -42,7 +77,7 @@ class PriceCheckService(
         return resultStr
     }
 
-    // Mono 형태로 return 해야, 합성이 쉬움
+  // Mono 형태로 return 해야, 합성이 쉬움
     fun getPriceMono(stockCd: String, acctId: String): Mono<HantooPriceTemplate.PriceResponse> {
         val appKey = userInfo.getAppKey(acctId)!!
         val appsecret = userInfo.getAppSecret(acctId)!!
@@ -111,45 +146,4 @@ class PriceCheckService(
         println("youngjai: Current thread state: $threadState")
     }
 
-    @Async("purestar_thread")
-    @Scheduled(fixedDelay = 10)
-    fun getPriceAsync2() {
-        val currentThread = Thread.currentThread()
-        val threadId = currentThread.id
-        val threadName = currentThread.name
-        val threadState = currentThread.state
-        println("purestar : Current thread ID: $threadId")
-        println("purestar : Current thread name: $threadName")
-        println("purestar : Current thread state: $threadState")
-        priceCollect(MIXED_STOCK_SAMPLE_V2, "purestar")
-    }
-
-    @Async("hwang1_thread")
-    @Scheduled(fixedDelay = 10)
-    fun getPriceAsync3() {
-        val currentThread = Thread.currentThread()
-        val threadId = currentThread.id
-        val threadName = currentThread.name
-        val threadState = currentThread.state
-        println("hwang1 : Current thread ID: $threadId")
-        println("hwang1 : Current thread name: $threadName")
-        println("hwang1 : Current thread state: $threadState")
-        priceCollect(MIXED_STOCK_SAMPLE_V3, "hwang1")
-    }
-
-
-//    fun getPriceMono(stockCd: String) {
-//        val priceRequestForm = if(stockCd.matches("[a-zA-Z]+".toRegex())){
-//            HantooPriceTemplate.DomesticPriceRequest(
-//                request = HantooPriceTemplate.DomesticPriceRequest.Request(fid_input_iscd = stockCd),
-//                header = HantooPriceTemplate.DomesticPriceRequest.Header()
-//            )
-//        } else {
-//            HantooPriceTemplate.OverseaPriceRequest(
-//                request = HantooPriceTemplate.OverseaPriceRequest.Request(symb = stockCd),
-//                header = HantooPriceTemplate.OverseaPriceRequest.Header()
-//            )
-//        }
-//        hantooClient.getPrice(priceRequestForm)
-//    }
 }
