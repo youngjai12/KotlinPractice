@@ -18,4 +18,8 @@ Test 코드를 잘 만듬으로써 시험해보는 경우도 많은데, 이떄 m
 #### WebClient's Asynchronous & non-blocking Call
 * 위의 webclient 호출결과를 async-nonBlocking하게 동시다발적으로 호출하기 
 
-#### MultiThread Programming 
+#### MultiThread Programming - @Scheduled
+* @Scheduled 만 붙이고, default 조건으로 쓰는것 
+* SchedulingConfigurer 을 bean으로 주입하도록 class 생성 -> default로 single thread 말고, multi-thread로 구현하려고..! 
+	* 이 떄, ScheduledExecutorService 을 bean으로 등록하고, 
+	* 이것 기준으로 scheduled된 것들 shutdown하거나, 다시 schedule하는것 구현 
