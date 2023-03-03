@@ -15,7 +15,6 @@ class HantooPriceInfoDeserializer: JsonDeserializer<HantooPriceTemplate.PriceRes
     override fun deserialize(jsonParser: JsonParser?, ctxt: DeserializationContext): HantooPriceTemplate.PriceResponse {
         val node: JsonNode? = jsonParser?.codec?.readTree(jsonParser)
         val stockPrice = node?.get("output")?.get("stck_prpr")?.asText()
-        logger.info("### hantoo stockCode : ${stockPrice}")
 
         return stockPrice?.let {
             ctxt.readValue(node.traverse().also { it.nextToken() }, HantooPriceTemplate.DomesticPriceRequest.Response::class.java)

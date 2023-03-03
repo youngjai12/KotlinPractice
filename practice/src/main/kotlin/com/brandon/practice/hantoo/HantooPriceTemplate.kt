@@ -73,12 +73,12 @@ interface HantooPriceTemplate {
     ): ApiTemplate<OverseaPriceRequest.Response, OverseaPriceRequest.Request, OverseaPriceRequest.Header> {
         class Response(
             @JsonProperty("output")
-            val stockPriceDetail: OverseaHantooPrice.Output,
-            val rt_cd: String,
-            val msg_cd: String,
+            val stockPriceDetail: OverseaHantooPrice.Output? = null,
+            val rt_cd: String? = null,
+            val msg_cd: String? = null,
             val msg1: String? = null
         ): ApiResponse, PriceResponse {
-            override fun currentPrice(): String = stockPriceDetail.last ?: "-1"
+            override fun currentPrice(): String = stockPriceDetail?.last ?: "-1"
             override fun priceUnit(): String {
                 return if(currentPrice().toDouble() > 10.0) {
                     "5"

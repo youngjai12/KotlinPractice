@@ -173,3 +173,4 @@ data class DomesticHantooPrice(
         val wholLoanRmndRate: String? = null
     )
 }
+

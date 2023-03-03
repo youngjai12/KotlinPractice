@@ -1,18 +1,19 @@
 package com.brandon.practice.service
 
-
 import com.brandon.practice.config.SchedulerConfig
-import com.brandon.practice.domain.PriceAt
 import com.brandon.practice.hantoo.HantooClient
 import com.brandon.practice.hantoo.HantooPriceTemplate
 import com.brandon.practice.module.UserInfoProperties
 import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Service
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 
+@Service
 class PriceCheckService(
     val hantooClient: HantooClient,
     val userInfo: UserInfoProperties,
@@ -135,17 +136,11 @@ class PriceCheckService(
         }
     }
 
-    @Async("youngjai_thread")
-    @Scheduled(fixedDelay = 10)
-    fun getPriceAsync1() {
-        priceCollect(MIXED_STOCK_SAMPLE, "youngjai")
-        val currentThread = Thread.currentThread()
-        val threadId = currentThread.id
-        val threadName = currentThread.name
-        val threadState = currentThread.state
-        println("youngjai: Current thread ID: $threadId")
-        println("youngjai: Current thread name: $threadName")
-        println("youngjai: Current thread state: $threadState")
-    }
-
 }
+
+data class PriceAt(
+    val stockCd: String,
+    val price: String = "default",
+    val at : Long = System.currentTimeMillis()/1000,
+    val priceUnit: String
+)
