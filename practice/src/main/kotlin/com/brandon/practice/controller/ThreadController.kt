@@ -44,5 +44,17 @@ class ThreadController(
         return CustomizedJsonResult.ok(priceCheckService.showStockMap(acctId))
     }
 
+    @GetMapping("/stock_price/cancel_thread/{acct_id}")
+    fun cancelStockThread(@PathVariable(value="acct_id") acctId: String): CustomizedJsonResult {
+        val result = priceCheckService.cancelSchedule(acctId)
+        return CustomizedJsonResult.ok("cancel monitor thread(${acctId}) result(${result})")
+    }
+
+    @GetMapping("/stock_price/start_thread/{acct_id}")
+    fun startStockThread(@PathVariable(value="acct_id") acctId: String): CustomizedJsonResult {
+        priceCheckService.startSchedule(acctId)
+        return CustomizedJsonResult.ok("successfully started thread ${acctId}")
+    }
+
 
 }

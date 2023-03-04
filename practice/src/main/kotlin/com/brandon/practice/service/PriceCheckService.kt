@@ -20,6 +20,7 @@ class PriceCheckService(
     private val logger = LoggerFactory.getLogger(javaClass)
     private val currentPriceInfo = ConcurrentHashMap<String, PriceAt>()
     private val stockAssingedMap = HashMap<String, List<String>>()
+    private val scheduledTaskStatusMap = HashMap<String, ScheduledFuture<*>?>()
     val threadCount = 3
 
     companion object{
@@ -47,10 +48,24 @@ class PriceCheckService(
         totStockList.chunked(perAssingedCnt).forEachIndexed { idx, subStockList ->
             val acctId: String = availableAcct[idx]
             stockAssingedMap[acctId] = subStockList
-            val sheduledFuture: ScheduledFuture<*> = scheduler.scheduleAtFixedRate({ priceCollect(subStockList, acctId) },
+            scheduledTaskStatusMap[acctId] = scheduler.scheduleAtFixedRate({ priceCollect(subStockList, acctId) },
                 0L, 10L, TimeUnit.MILLISECONDS)
-
         }
+    }
+
+    fun cancelSchedule(acctId: String): Boolean {
+        // scheduledFuture.cancel() 하면
+        //it is removed from the ScheduledExecutorService's task queue and will not be executed in the future.
+        return scheduledTaskStatusMap[acctId]?.let {
+            it.cancel(true)
+            scheduledTaskStatusMap[acctId] = null
+             true
+        } ?: false
+    }
+
+    fun startSchedule(acctId: String) {
+        scheduledTaskStatusMap[acctId] = priceCheckScheduler.scheduleAtFixedRate({ priceCollect(stockAssingedMap[acctId]!!, acctId) },
+            0L, 10L, TimeUnit.MILLISECONDS)
     }
 
     final override fun restartScheduler(initial: Boolean, threadCount: Int) {
