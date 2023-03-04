@@ -8,10 +8,8 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.Executors
-import java.util.concurrent.ScheduledExecutorService
-import java.util.concurrent.TimeUnit
+import java.util.concurrent.*
+import kotlin.math.ceil
 
 @Service
 class PriceCheckService(
@@ -21,21 +19,41 @@ class PriceCheckService(
 ): CronService {
     private val logger = LoggerFactory.getLogger(javaClass)
     private val currentPriceInfo = ConcurrentHashMap<String, PriceAt>()
-
-   val CHUNK_SIZE = 10
+    private val stockAssingedMap = HashMap<String, List<String>>()
+    val threadCount = 3
 
     companion object{
+        val CHUNK_SIZE = 3
         val MIXED_STOCK_SAMPLE = listOf("002420", "002820", "006880", "008500", "MSFT", "033250", "079190", "INTC", "101400")
         val MIXED_STOCK_SAMPLE_V2 = listOf("104460", "110020", "NVDA", "140910", "AAPL", "191410", "263920")
         val MIXED_STOCK_SAMPLE_V3 = listOf("001820", "006340", "REGN", "039560", "META", "066430", "AMZN")
         val MIXED_STOCK_SAMPLE_V4 = listOf("010100", "016580", "AVGO", "036670", "036800", "ASML", "TSLA", "023910")
-    }
-      init{
-        restartScheduler(initial = true)
+        val TOT_STOCK_LIST = MIXED_STOCK_SAMPLE.plus(MIXED_STOCK_SAMPLE_V2).plus(MIXED_STOCK_SAMPLE_V3)
+            .plus(MIXED_STOCK_SAMPLE_V4)
     }
 
-    final override fun restartScheduler(initial: Boolean) {
-        val acctIdList = listOf("youngjai", "hwang1", "purestar", "shantf2")
+    init{
+        restartScheduler(initial = true, threadCount)
+    }
+
+    // toStockList 를 제공해주는 Service를 제대로 만들어서, 불필요한 종목들까지도
+    // 굳이 monitoring 하지 않도록 만들기
+    fun assignStockMonitoring(totStockList: List<String>, scheduler: ScheduledExecutorService) {
+        val tmpAcctIdList = listOf("youngjai", "hwang1", "purestar", "shantf2")
+        val availableAcct = tmpAcctIdList.take(threadCount)
+
+        val perAssingedCnt = ceil(totStockList.size.toDouble() / threadCount.toDouble()).toInt()
+
+        totStockList.chunked(perAssingedCnt).forEachIndexed { idx, subStockList ->
+            val acctId: String = availableAcct[idx]
+            stockAssingedMap[acctId] = subStockList
+            val sheduledFuture: ScheduledFuture<*> = scheduler.scheduleAtFixedRate({ priceCollect(subStockList, acctId) },
+                0L, 10L, TimeUnit.MILLISECONDS)
+
+        }
+    }
+
+    final override fun restartScheduler(initial: Boolean, threadCount: Int) {
         if(!initial){
             logger.info("### this scheduler ${priceCheckScheduler.toString()}")
             shutDown()
@@ -43,14 +61,10 @@ class PriceCheckService(
             if(priceCheckScheduler.isShutdown){
                 priceCheckScheduler =  Executors.newScheduledThreadPool(SchedulerConfig.POOL_SIZE)
             }
-
         }
         logger.info("[PriceCheckService] restart Scheduler: ${priceCheckScheduler.toString()}")
-        acctIdList.forEach { acctId ->
-            val stockList = stockMonitorAssign(acctId)
-            priceCheckScheduler.scheduleAtFixedRate({ priceCollect(stockList, acctId) },
-                0L, 10L, TimeUnit.MILLISECONDS)
-        }
+
+        assignStockMonitoring(TOT_STOCK_LIST, priceCheckScheduler)
     }
 
     override fun shutDown() {
@@ -61,21 +75,26 @@ class PriceCheckService(
         }
     }
 
-    private fun stockMonitorAssign(acctId: String): List<String> {
-      return when(acctId){
-            "youngjai" -> MIXED_STOCK_SAMPLE
-            "purestar" -> MIXED_STOCK_SAMPLE_V2
-            "hwang1" -> MIXED_STOCK_SAMPLE_V3
-            "shantf2" -> MIXED_STOCK_SAMPLE_V4
-            else -> listOf("null")
-        }
-    }
+//    private fun tempStockMonitorAssign(acctId: String): List<String> {
+//      return when(acctId){
+//            "youngjai" -> MIXED_STOCK_SAMPLE
+//            "purestar" -> MIXED_STOCK_SAMPLE_V2
+//            "hwang1" -> MIXED_STOCK_SAMPLE_V3
+//            "shantf2" -> MIXED_STOCK_SAMPLE_V4
+//            else -> listOf("null")
+//        }
+//    }
 
     fun showStockMap(acctId: String): String {
-        val stockList = stockMonitorAssign(acctId)
+        val stockList = stockAssingedMap[acctId]
         var resultStr = ""
-        for(stockCd in stockList){
-            resultStr = resultStr + "${stockCd}(${currentPriceInfo[stockCd]?.price} @ ${currentPriceInfo[stockCd]?.at})"
+
+        stockList?.let{
+            for(stockCd in it){
+                resultStr = resultStr + "${stockCd}(${currentPriceInfo[stockCd]?.price} @ ${currentPriceInfo[stockCd]?.at})"
+            }
+        } ?: run {
+            resultStr = "none"
         }
         return resultStr
     }

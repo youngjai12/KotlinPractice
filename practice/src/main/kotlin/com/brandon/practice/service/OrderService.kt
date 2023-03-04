@@ -33,7 +33,7 @@ class OrderService(
         }
     }
 
-    override fun restartScheduler(initial: Boolean) {
+    override fun restartScheduler(initial: Boolean, threadCount: Int) {
         if(!initial){
             logger.info("### this scheduler ${priceCheckScheduler.toString()}")
             shutDown()

@@ -17,18 +17,25 @@ class ThreadController(
     private val orderService: OrderService
 ) {
 
-   @GetMapping("/stock_price/stop_monitor")
-    fun stopMonitor(): CustomizedJsonResult {
+   @GetMapping("/threads/stop")
+    fun stopThreads(): CustomizedJsonResult {
         priceCheckService.shutDown()
         orderService.shutDown()
         return CustomizedJsonResult.ok("shutDown all the scheduledJobs")
     }
 
-    @GetMapping("/stock_price/restart_monitor")
-    fun restartMonitor(): CustomizedJsonResult {
-        priceCheckService.restartScheduler(initial = false)
-        orderService.restartScheduler(initial = false)
+    @GetMapping("/threads/restart")
+    fun restartThreads(): CustomizedJsonResult {
+        priceCheckService.restartScheduler(initial = false, priceCheckService.threadCount)
+        orderService.restartScheduler(initial = false, 1)
         return CustomizedJsonResult.ok("successfully restarted monitoring !!")
+    }
+
+    @GetMapping("/stock_price/restart_monitor/{threadCnt}")
+    fun reassignStockMonitor(@PathVariable(value = "threadCnt") threadCnt: Int): CustomizedJsonResult {
+        priceCheckService.restartScheduler(false, threadCnt)
+
+        return CustomizedJsonResult.ok("su")
     }
 
     @GetMapping("/stock_price/show_price/{acct_id}")
