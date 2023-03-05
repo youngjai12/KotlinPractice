@@ -1,8 +1,7 @@
 package com.brandon.practice.service
 
-import com.brandon.practice.config.SchedulerConfig
+import com.brandon.practice.config.PriceMonitorSchedulerConfiguration
 import org.slf4j.LoggerFactory
-import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -10,12 +9,12 @@ import java.util.concurrent.TimeUnit
 
 @Service
 class OrderService(
-    var priceCheckScheduler: ScheduledExecutorService
+    var customizedScheduler: ScheduledExecutorService
 ): CronService {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     init {
-        priceCheckScheduler.scheduleAtFixedRate({ executeOrder() }, 0L, 3000L, TimeUnit.MILLISECONDS)
+        customizedScheduler.scheduleAtFixedRate({ executeOrder() }, 0L, 3000L, TimeUnit.MILLISECONDS)
     }
 
     fun executeOrder() {
@@ -26,25 +25,25 @@ class OrderService(
     }
 
     override fun shutDown() {
-        logger.info("[OrderService] toShutDown Scheduler: ${priceCheckScheduler.toString()}")
-        if(!priceCheckScheduler.isShutdown){
+        logger.info("[OrderService] toShutDown Scheduler: ${customizedScheduler.toString()}")
+        if(!customizedScheduler.isShutdown){
             logger.info("[OrderService] shutdown")
-            priceCheckScheduler.shutdown()
+            customizedScheduler.shutdown()
         }
     }
 
     override fun restartScheduler(initial: Boolean, threadCount: Int) {
         if(!initial){
-            logger.info("### this scheduler ${priceCheckScheduler.toString()}")
+            logger.info("### this scheduler ${customizedScheduler.toString()}")
             shutDown()
-            logger.info("[OrderService] scheduler shutDown?(${priceCheckScheduler.isShutdown})")
-            if(priceCheckScheduler.isShutdown){
+            logger.info("[OrderService] scheduler shutDown?(${customizedScheduler.isShutdown})")
+            if(customizedScheduler.isShutdown){
                 logger.info("[OrderService] needs to shutdown")
-                priceCheckScheduler =  Executors.newScheduledThreadPool(SchedulerConfig.POOL_SIZE)
+                customizedScheduler =  Executors.newScheduledThreadPool(PriceMonitorSchedulerConfiguration.POOL_SIZE)
             }
         }
-        logger.info("[OrderService] restart Scheduler: ${priceCheckScheduler.toString()}")
-        priceCheckScheduler.scheduleAtFixedRate({ executeOrder() }, 0L, 3000L, TimeUnit.MILLISECONDS)
+        logger.info("[OrderService] restart Scheduler: ${customizedScheduler.toString()}")
+        customizedScheduler.scheduleAtFixedRate({ executeOrder() }, 0L, 3000L, TimeUnit.MILLISECONDS)
 
     }
 }

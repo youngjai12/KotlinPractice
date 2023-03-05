@@ -1,6 +1,6 @@
 package com.brandon.practice.service
 
-import com.brandon.practice.config.SchedulerConfig
+import com.brandon.practice.config.PriceMonitorSchedulerConfiguration
 import com.brandon.practice.hantoo.HantooClient
 import com.brandon.practice.hantoo.HantooPriceTemplate
 import com.brandon.practice.module.UserInfoProperties
@@ -74,7 +74,7 @@ class PriceCheckService(
             shutDown()
             logger.info("[PriceCheckService] scheduler shutDown?(${priceCheckScheduler.isShutdown})")
             if(priceCheckScheduler.isShutdown){
-                priceCheckScheduler =  Executors.newScheduledThreadPool(SchedulerConfig.POOL_SIZE)
+                priceCheckScheduler =  Executors.newScheduledThreadPool(PriceMonitorSchedulerConfiguration.POOL_SIZE)
             }
         }
         logger.info("[PriceCheckService] restart Scheduler: ${priceCheckScheduler.toString()}")
@@ -89,16 +89,6 @@ class PriceCheckService(
             priceCheckScheduler.shutdown()
         }
     }
-
-//    private fun tempStockMonitorAssign(acctId: String): List<String> {
-//      return when(acctId){
-//            "youngjai" -> MIXED_STOCK_SAMPLE
-//            "purestar" -> MIXED_STOCK_SAMPLE_V2
-//            "hwang1" -> MIXED_STOCK_SAMPLE_V3
-//            "shantf2" -> MIXED_STOCK_SAMPLE_V4
-//            else -> listOf("null")
-//        }
-//    }
 
     fun showStockMap(acctId: String): String {
         val stockList = stockAssingedMap[acctId]
