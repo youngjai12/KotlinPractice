@@ -5,6 +5,7 @@ import com.brandon.practice.hantoo.HantooClient
 import com.brandon.practice.hantoo.HantooPriceTemplate
 import com.brandon.practice.module.UserInfoProperties
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -15,6 +16,7 @@ import kotlin.math.ceil
 class PriceCheckService(
     val hantooClient: HantooClient,
     val userInfo: UserInfoProperties,
+    @Qualifier("priceMonitorScheduler")
     var priceCheckScheduler: ScheduledExecutorService
 ): CronService {
     private val logger = LoggerFactory.getLogger(javaClass)
@@ -89,16 +91,6 @@ class PriceCheckService(
             priceCheckScheduler.shutdown()
         }
     }
-
-//    private fun tempStockMonitorAssign(acctId: String): List<String> {
-//      return when(acctId){
-//            "youngjai" -> MIXED_STOCK_SAMPLE
-//            "purestar" -> MIXED_STOCK_SAMPLE_V2
-//            "hwang1" -> MIXED_STOCK_SAMPLE_V3
-//            "shantf2" -> MIXED_STOCK_SAMPLE_V4
-//            else -> listOf("null")
-//        }
-//    }
 
     fun showStockMap(acctId: String): String {
         val stockList = stockAssingedMap[acctId]

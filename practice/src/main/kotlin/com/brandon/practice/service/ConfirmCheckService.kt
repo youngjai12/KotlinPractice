@@ -9,33 +9,33 @@ import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 
 @Service
-class OrderService(
+class ConfirmCheckService (
     @Qualifier("queueExecuteScheduler")
     var queExecuteScheduler: ScheduledExecutorService
 ): CronService {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     init {
-        queExecuteScheduler.scheduleAtFixedRate({ executeOrder() }, 0L, 3000L, TimeUnit.MILLISECONDS)
+        queExecuteScheduler.scheduleAtFixedRate({ confirmCheck() }, 0L, 5000L, TimeUnit.MILLISECONDS)
     }
 
-    fun executeOrder() {
+    fun confirmCheck() {
         val currentThread = Thread.currentThread()
         val threadId = currentThread.id
         val threadName = currentThread.name
-        logger.info("orderService: Current thread ID($threadId) name($threadName)")
+        logger.info("## ConfirmCheckService: Current thread ID($threadId) name($threadName)")
     }
 
     override fun shutDown() {
-        logger.info("[OrderService] toShutDown Scheduler: ${queExecuteScheduler.toString()}")
+        logger.info("[ConfirmCheckService] toShutDown Scheduler: ${queExecuteScheduler.toString()}")
         if(!queExecuteScheduler.isShutdown){
-            logger.info("[OrderService] shutdown")
+            logger.info("[ConfirmCheckService] shutdown")
             queExecuteScheduler.shutdown()
         }
     }
 
     override fun restartScheduler(initial: Boolean, threadCount: Int) {
-        if(!initial){
+        if (!initial){
             logger.info("### this scheduler ${queExecuteScheduler.toString()}")
             shutDown()
             logger.info("[OrderService] scheduler shutDown?(${queExecuteScheduler.isShutdown})")
@@ -45,7 +45,7 @@ class OrderService(
             }
         }
         logger.info("[OrderService] restart Scheduler: ${queExecuteScheduler.toString()}")
-        queExecuteScheduler.scheduleAtFixedRate({ executeOrder() }, 0L, 3000L, TimeUnit.MILLISECONDS)
-
+        queExecuteScheduler.scheduleAtFixedRate({ confirmCheck() }, 0L, 5000L, TimeUnit.MILLISECONDS)
     }
+
 }
