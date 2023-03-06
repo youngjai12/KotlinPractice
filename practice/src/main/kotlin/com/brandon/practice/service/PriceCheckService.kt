@@ -1,6 +1,5 @@
 package com.brandon.practice.service
 
-import com.brandon.practice.config.SchedulerConfig
 import com.brandon.practice.hantoo.HantooClient
 import com.brandon.practice.hantoo.HantooPriceTemplate
 import com.brandon.practice.module.UserInfoProperties
@@ -17,7 +16,7 @@ class PriceCheckService(
     val hantooClient: HantooClient,
     val userInfo: UserInfoProperties,
     @Qualifier("priceMonitorScheduler")
-    var priceCheckScheduler: ScheduledExecutorService
+    var priceCheckScheduler: ScheduledExecutorService,
 ): CronService {
     private val logger = LoggerFactory.getLogger(javaClass)
     private val currentPriceInfo = ConcurrentHashMap<String, PriceAt>()
@@ -34,25 +33,10 @@ class PriceCheckService(
         val TOT_STOCK_LIST = MIXED_STOCK_SAMPLE.plus(MIXED_STOCK_SAMPLE_V2).plus(MIXED_STOCK_SAMPLE_V3)
             .plus(MIXED_STOCK_SAMPLE_V4)
     }
+    override val POOL_SIZE: Int = 5
 
     init{
-        restartScheduler(initial = true, threadCount)
-    }
-
-    // toStockList 를 제공해주는 Service를 제대로 만들어서, 불필요한 종목들까지도
-    // 굳이 monitoring 하지 않도록 만들기
-    fun assignStockMonitoring(totStockList: List<String>, scheduler: ScheduledExecutorService) {
-        val tmpAcctIdList = listOf("youngjai", "hwang1", "purestar", "shantf2")
-        val availableAcct = tmpAcctIdList.take(threadCount)
-
-        val perAssingedCnt = ceil(totStockList.size.toDouble() / threadCount.toDouble()).toInt()
-
-        totStockList.chunked(perAssingedCnt).forEachIndexed { idx, subStockList ->
-            val acctId: String = availableAcct[idx]
-            stockAssingedMap[acctId] = subStockList
-            scheduledTaskStatusMap[acctId] = scheduler.scheduleAtFixedRate({ priceCollect(subStockList, acctId) },
-                0L, 10L, TimeUnit.MILLISECONDS)
-        }
+        restartScheduler(className = "PriceCherService", initial = true, logger, priceCheckScheduler)
     }
 
     fun cancelSchedule(acctId: String): Boolean {
@@ -65,31 +49,10 @@ class PriceCheckService(
         } ?: false
     }
 
+    // 기본적인 CronService 에서 제공하는 것과는 다르게, api로 개개의 acctId별 thread만 켜고싶을떄.
     fun startSchedule(acctId: String) {
-        scheduledTaskStatusMap[acctId] = priceCheckScheduler.scheduleAtFixedRate({ priceCollect(stockAssingedMap[acctId]!!, acctId) },
+        scheduledTaskStatusMap[acctId] = priceCheckScheduler.scheduleAtFixedRate({ execute(stockAssingedMap[acctId]!!, acctId) },
             0L, 10L, TimeUnit.MILLISECONDS)
-    }
-
-    final override fun restartScheduler(initial: Boolean, threadCount: Int) {
-        if(!initial){
-            logger.info("### this scheduler ${priceCheckScheduler.toString()}")
-            shutDown()
-            logger.info("[PriceCheckService] scheduler shutDown?(${priceCheckScheduler.isShutdown})")
-            if(priceCheckScheduler.isShutdown){
-                priceCheckScheduler =  Executors.newScheduledThreadPool(SchedulerConfig.POOL_SIZE)
-            }
-        }
-        logger.info("[PriceCheckService] restart Scheduler: ${priceCheckScheduler.toString()}")
-
-        assignStockMonitoring(TOT_STOCK_LIST, priceCheckScheduler)
-    }
-
-    override fun shutDown() {
-        logger.info("[PriceCheck Service] toShutDown Scheduler: ${priceCheckScheduler.toString()}")
-        if(!priceCheckScheduler.isShutdown){
-            logger.info("[PriceCheck Service] shutdown")
-            priceCheckScheduler.shutdown()
-        }
     }
 
     fun showStockMap(acctId: String): String {
@@ -104,6 +67,21 @@ class PriceCheckService(
             resultStr = "none"
         }
         return resultStr
+    }
+
+    override fun reassignSchedule(newScheduler: ScheduledExecutorService) {
+        val tmpAcctIdList = listOf("youngjai", "hwang1", "purestar", "shantf2")
+        val availableAcct = tmpAcctIdList.take(threadCount)
+
+        val perAssignedCnt = ceil(TOT_STOCK_LIST.size.toDouble() / threadCount.toDouble()).toInt()
+        priceCheckScheduler = newScheduler
+
+        TOT_STOCK_LIST.chunked(perAssignedCnt).forEachIndexed { idx, subStockList ->
+            val acctId: String = availableAcct[idx]
+            stockAssingedMap[acctId] = subStockList
+            scheduledTaskStatusMap[acctId] = priceCheckScheduler.scheduleAtFixedRate({ execute(subStockList, acctId) },
+                0L, 10L, TimeUnit.MILLISECONDS)
+        }
     }
 
   // Mono 형태로 return 해야, 합성이 쉬움
@@ -128,7 +106,7 @@ class PriceCheckService(
         return hantooClient.getPrice(priceRequestForm)
     }
 
-    fun priceCollect(stockList: List<String>, acctId: String) {
+    fun execute(stockList: List<String>, acctId: String) {
         stockList.chunked(CHUNK_SIZE).forEach{ chunkedStockList ->
             Thread.sleep(970)
             var priceTraceString = ""
@@ -161,6 +139,8 @@ class PriceCheckService(
 
         }
     }
+
+
 
 }
 
