@@ -1,6 +1,5 @@
 package com.brandon.practice.service
 
-import com.brandon.practice.config.SchedulerConfig
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier

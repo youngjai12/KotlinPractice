@@ -14,9 +14,7 @@ import kotlin.math.ceil
 @Service
 class PriceCheckService(
     val hantooClient: HantooClient,
-    val userInfo: UserInfoProperties,
-    @Qualifier("priceMonitorScheduler")
-    var priceCheckScheduler: ScheduledExecutorService,
+    val userInfo: UserInfoProperties
 ): CronService {
     private val logger = LoggerFactory.getLogger(javaClass)
     private val currentPriceInfo = ConcurrentHashMap<String, PriceAt>()
