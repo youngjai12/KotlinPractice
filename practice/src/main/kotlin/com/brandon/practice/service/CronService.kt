@@ -6,7 +6,9 @@ import java.util.concurrent.ScheduledExecutorService
 
 sealed interface CronService {
 
-    fun shutDown(className: String, logger: Logger, scheduler: ScheduledExecutorService) {
+    var scheduler: ScheduledExecutorService
+
+    fun shutDown(className: String, logger: Logger) {
         logger.info("[${className}] toShutDown Scheduler: ${scheduler.toString()}")
         if(!scheduler.isShutdown){
             logger.info("[${className}] shutdown")
@@ -19,10 +21,10 @@ sealed interface CronService {
     fun reassignSchedule(newScheduler: ScheduledExecutorService)
 
     fun restartScheduler( className: String, initial: Boolean,
-                         logger: Logger, scheduler: ScheduledExecutorService) {
+                         logger: Logger) {
         if (!initial){
             logger.info("### this scheduler ${scheduler.toString()}")
-            shutDown(className, logger, scheduler)
+            shutDown(className, logger)
             logger.info("[${className}] scheduler shutDown?(${scheduler.isShutdown})")
         }
         // shutDown 되든말든, 일단 새로운 scheduler는 선언돼야함.

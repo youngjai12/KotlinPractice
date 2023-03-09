@@ -14,13 +14,18 @@ import kotlin.math.ceil
 @Service
 class PriceCheckService(
     val hantooClient: HantooClient,
-    val userInfo: UserInfoProperties
+    val userInfo: UserInfoProperties,
+    @Qualifier("priceMonitorScheduler")
+    private var priceMonitorscheduler: ScheduledExecutorService,
 ): CronService {
     private val logger = LoggerFactory.getLogger(javaClass)
     private val currentPriceInfo = ConcurrentHashMap<String, PriceAt>()
     private val stockAssingedMap = HashMap<String, List<String>>()
     private val scheduledTaskStatusMap = HashMap<String, ScheduledFuture<*>?>()
+
     val threadCount = 3
+
+    override var scheduler: ScheduledExecutorService = priceMonitorscheduler
 
     companion object{
         val CHUNK_SIZE = 3
@@ -34,7 +39,7 @@ class PriceCheckService(
     override val POOL_SIZE: Int = 5
 
     init{
-        restartScheduler(className = "PriceCherService", initial = true, logger, priceCheckScheduler)
+        restartScheduler(className = "PriceCherService", initial = true, logger)
     }
 
     fun cancelSchedule(acctId: String): Boolean {
@@ -49,7 +54,7 @@ class PriceCheckService(
 
     // 기본적인 CronService 에서 제공하는 것과는 다르게, api로 개개의 acctId별 thread만 켜고싶을떄.
     fun startSchedule(acctId: String) {
-        scheduledTaskStatusMap[acctId] = priceCheckScheduler.scheduleAtFixedRate({ execute(stockAssingedMap[acctId]!!, acctId) },
+        scheduledTaskStatusMap[acctId] = scheduler.scheduleAtFixedRate({ execute(stockAssingedMap[acctId]!!, acctId) },
             0L, 10L, TimeUnit.MILLISECONDS)
     }
 
@@ -72,12 +77,12 @@ class PriceCheckService(
         val availableAcct = tmpAcctIdList.take(threadCount)
 
         val perAssignedCnt = ceil(TOT_STOCK_LIST.size.toDouble() / threadCount.toDouble()).toInt()
-        priceCheckScheduler = newScheduler
+        scheduler = newScheduler
 
         TOT_STOCK_LIST.chunked(perAssignedCnt).forEachIndexed { idx, subStockList ->
             val acctId: String = availableAcct[idx]
             stockAssingedMap[acctId] = subStockList
-            scheduledTaskStatusMap[acctId] = priceCheckScheduler.scheduleAtFixedRate({ execute(subStockList, acctId) },
+            scheduledTaskStatusMap[acctId] = scheduler.scheduleAtFixedRate({ execute(subStockList, acctId) },
                 0L, 10L, TimeUnit.MILLISECONDS)
         }
     }

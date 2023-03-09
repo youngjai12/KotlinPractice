@@ -9,26 +9,29 @@ import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 
 @Service
-class ConfirmCheckService (
+class ConfirmCheckService(
     @Qualifier("queueExecuteScheduler")
-    var queExecuteScheduler: ScheduledExecutorService
+    private var confirmQueScheduler: ScheduledExecutorService
 ): CronService {
     private val logger: Logger = LoggerFactory.getLogger(javaClass)
+    // private lateinit var confirmQueScheduler: ScheduledExecutorService
 
     init {
-        queExecuteScheduler.scheduleAtFixedRate({ execute() }, 0L, 5000L, TimeUnit.MILLISECONDS)
+        restartScheduler(className = "orderService", initial = true, logger = logger, scheduler = confirmQueScheduler)
     }
 
-    override fun execute() {
+   fun execute() {
         val currentThread = Thread.currentThread()
         val threadId = currentThread.id
         val threadName = currentThread.name
         logger.info("## ConfirmCheckService: Current thread ID($threadId) name($threadName)")
     }
 
-    override fun reassignSchedule(className: String) {
-        queExecuteScheduler =  Executors.newScheduledThreadPool(SchedulerConfig.POOL_SIZE)
-        queExecuteScheduler.scheduleAtFixedRate({ execute() }, 0L, 5000L, TimeUnit.MILLISECONDS)
+    override fun reassignSchedule(newScheduler: ScheduledExecutorService) {
+        newScheduler.scheduleAtFixedRate({ execute() }, 0L, 3000L, TimeUnit.MILLISECONDS)
     }
+
+    override val POOL_SIZE: Int = 1
+
 
 }
