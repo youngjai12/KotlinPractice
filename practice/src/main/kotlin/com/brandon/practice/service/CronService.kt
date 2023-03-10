@@ -17,11 +17,11 @@ sealed interface CronService {
     }
 
     val POOL_SIZE: Int
+    val logger: Logger
 
     fun reassignSchedule(newScheduler: ScheduledExecutorService)
 
-    fun restartScheduler( className: String, initial: Boolean,
-                         logger: Logger) {
+    fun restartScheduler( className: String, initial: Boolean) {
         if (!initial){
             logger.info("### this scheduler ${scheduler.toString()}")
             shutDown(className, logger)

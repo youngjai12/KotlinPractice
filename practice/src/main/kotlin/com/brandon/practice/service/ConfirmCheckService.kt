@@ -17,8 +17,10 @@ class ConfirmCheckService(
     // private lateinit var confirmQueScheduler: ScheduledExecutorService
 
     init {
-        restartScheduler(className = "orderService", initial = true, logger = logger, scheduler = confirmQueScheduler)
+        restartScheduler(className = "orderService", initial = true, logger = logger)
     }
+
+    override var scheduler: ScheduledExecutorService = confirmQueScheduler
 
    fun execute() {
         val currentThread = Thread.currentThread()

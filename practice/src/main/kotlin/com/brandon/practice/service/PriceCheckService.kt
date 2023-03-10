@@ -18,7 +18,7 @@ class PriceCheckService(
     @Qualifier("priceMonitorScheduler")
     private var priceMonitorscheduler: ScheduledExecutorService,
 ): CronService {
-    private val logger = LoggerFactory.getLogger(javaClass)
+    override val logger = LoggerFactory.getLogger(javaClass)
     private val currentPriceInfo = ConcurrentHashMap<String, PriceAt>()
     private val stockAssingedMap = HashMap<String, List<String>>()
     private val scheduledTaskStatusMap = HashMap<String, ScheduledFuture<*>?>()
@@ -39,7 +39,7 @@ class PriceCheckService(
     override val POOL_SIZE: Int = 5
 
     init{
-        restartScheduler(className = "PriceCherService", initial = true, logger)
+        restartScheduler(className = "PriceCherService", initial = true)
     }
 
     fun cancelSchedule(acctId: String): Boolean {

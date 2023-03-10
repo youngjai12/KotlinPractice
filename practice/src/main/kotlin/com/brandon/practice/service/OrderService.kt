@@ -20,7 +20,7 @@ class OrderService(
     override var scheduler: ScheduledExecutorService = queExecuteScheduler
 
     init {
-        restartScheduler(className = "orderService", initial = true, logger = logger, scheduler = queOrderScheduler)
+        restartScheduler(className = "orderService", initial = true, logger = logger)
     }
 
     fun executeOrder() {
