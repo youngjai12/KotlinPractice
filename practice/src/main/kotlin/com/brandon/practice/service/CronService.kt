@@ -30,7 +30,8 @@ sealed interface CronService {
         // shutDown 되든말든, 일단 새로운 scheduler는 선언돼야함.
         val newScheduler =  Executors.newScheduledThreadPool(POOL_SIZE)
 
-        if(!scheduler.isShutdown){
+
+        if(!(scheduler == null) && !scheduler.isShutdown){
             logger.info("[${className}] needs to shutdown")
             reassignSchedule(newScheduler)
         }

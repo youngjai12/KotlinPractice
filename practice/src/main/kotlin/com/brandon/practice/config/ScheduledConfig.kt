@@ -22,7 +22,6 @@ class ScheduledConfig: SchedulingConfigurer {
     @Bean(name = ["queueExecuteScheduler"])
     fun queExecuteScheduler(): ScheduledExecutorService = Executors.newScheduledThreadPool(QUE_EXEUTE_POOL_SIZE)
 
-
     override fun configureTasks(taskRegistrar: ScheduledTaskRegistrar) {
         taskRegistrar.setScheduler(priceMonitorScheduler())
         taskRegistrar.setScheduler(queExecuteScheduler())

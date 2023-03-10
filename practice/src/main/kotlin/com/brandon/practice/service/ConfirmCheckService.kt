@@ -13,11 +13,11 @@ class ConfirmCheckService(
     @Qualifier("queueExecuteScheduler")
     private var confirmQueScheduler: ScheduledExecutorService
 ): CronService {
-    private val logger: Logger = LoggerFactory.getLogger(javaClass)
+    override val logger: Logger = LoggerFactory.getLogger(javaClass)
     // private lateinit var confirmQueScheduler: ScheduledExecutorService
 
     init {
-        restartScheduler(className = "orderService", initial = true, logger = logger)
+        restartScheduler(className = "orderService", initial = true)
     }
 
     override var scheduler: ScheduledExecutorService = confirmQueScheduler
