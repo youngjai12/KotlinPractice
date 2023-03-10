@@ -1,39 +1,23 @@
 package com.brandon.practice.controller
 
-import com.brandon.practice.config.SchedulerConfig.Companion.POOL_SIZE
 import com.brandon.practice.module.CustomizedJsonResult
+import com.brandon.practice.service.ConfirmCheckService
 import com.brandon.practice.service.OrderService
 import com.brandon.practice.service.PriceCheckService
-import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
-import java.util.concurrent.*
 
 @RestController
 class ThreadController(
     private val priceCheckService: PriceCheckService,
-    private val orderService: OrderService
+    private val orderService: OrderService,
+    private val confirmCheckService: ConfirmCheckService
 ) {
-
-   @GetMapping("/threads/stop")
-    fun stopThreads(): CustomizedJsonResult {
-        priceCheckService.shutDown()
-        orderService.shutDown()
-        return CustomizedJsonResult.ok("shutDown all the scheduledJobs")
-    }
-
-    @GetMapping("/threads/restart")
-    fun restartThreads(): CustomizedJsonResult {
-        priceCheckService.restartScheduler(initial = false, priceCheckService.threadCount)
-        orderService.restartScheduler(initial = false, 1)
-        return CustomizedJsonResult.ok("successfully restarted monitoring !!")
-    }
 
     @GetMapping("/stock_price/restart_monitor/{threadCnt}")
     fun reassignStockMonitor(@PathVariable(value = "threadCnt") threadCnt: Int): CustomizedJsonResult {
-        priceCheckService.restartScheduler(false, threadCnt)
+        priceCheckService.restartScheduler("ThreadController",false)
 
         return CustomizedJsonResult.ok("su")
     }
@@ -54,6 +38,35 @@ class ThreadController(
     fun startStockThread(@PathVariable(value="acct_id") acctId: String): CustomizedJsonResult {
         priceCheckService.startSchedule(acctId)
         return CustomizedJsonResult.ok("successfully started thread ${acctId}")
+    }
+
+    @GetMapping("/thread/shut_down/{pool}")
+    fun shutDownSpecificPool(@PathVariable(value = "pool") pool: String): CustomizedJsonResult {
+        when (pool){
+            "order" -> orderService.shutDown("orderService", orderService.logger)
+            "confirm" -> confirmCheckService.shutDown("confirmCheckService", confirmCheckService.logger)
+            "stock" -> priceCheckService.shutDown("priceCheckService", priceCheckService.logger)
+            else -> {
+                orderService.shutDown("orderService", orderService.logger)
+                confirmCheckService.shutDown("confirmCheckService", confirmCheckService.logger)
+            }
+        }
+        return CustomizedJsonResult.ok("${pool} scheduler successfully shutdown !")
+    }
+
+    @GetMapping("thread/restart/{pool}")
+    fun restartSpecificPool(@PathVariable(value = "pool") pool: String): CustomizedJsonResult {
+        when (pool){
+            "order" -> orderService.restartScheduler("orderService", false)
+            "confirm" -> confirmCheckService.restartScheduler("confirmCheckService", false)
+            "stock" -> priceCheckService.restartScheduler("priceCheckService", false)
+            else -> {
+                orderService.restartScheduler("orderService", false)
+                confirmCheckService.restartScheduler("confirmCheckService", false)
+            }
+        }
+        return CustomizedJsonResult.ok("${pool} scheduler successfully restarted !")
+
     }
 
 
