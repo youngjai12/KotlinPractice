@@ -1,10 +1,12 @@
 package com.brandon.practice.threadTest
 
 import com.brandon.practice.service.ConfirmCheckService
+import com.brandon.practice.service.PriceCheckService
 import org.junit.jupiter.api.Test
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.TestPropertySource
 
 @TestPropertySource(locations = ["classpath:application.yml"])
@@ -17,6 +19,10 @@ class ScheduledThreadTest {
 
     @Autowired
     lateinit var confirmCheckService: ConfirmCheckService
+
+    @MockBean
+    lateinit var priceCheckService: PriceCheckService
+
 
     @Test
     fun scheduledThreadTest1(){

@@ -22,19 +22,19 @@ sealed interface CronService {
     fun reassignSchedule(newScheduler: ScheduledExecutorService)
 
     fun restartScheduler( className: String, initial: Boolean) {
+
+        // 처음이 아닌 경우면, 이미 scheduler-pool이 존재할 것이다.
         if (!initial){
             logger.info("### this scheduler ${scheduler.toString()}")
             shutDown(className, logger)
             logger.info("[${className}] scheduler shutDown?(${scheduler.isShutdown})")
         }
-        // shutDown 되든말든, 일단 새로운 scheduler는 선언돼야함.
+        // shutDown 되든말든, 일단 새로운 scheduler는 선언되고
         val newScheduler =  Executors.newScheduledThreadPool(POOL_SIZE)
 
+        logger.info("[${className}] has started ")
+        reassignSchedule(newScheduler)
 
-        if(!(scheduler == null) && !scheduler.isShutdown){
-            logger.info("[${className}] needs to shutdown")
-            reassignSchedule(newScheduler)
-        }
 
 
     }
