@@ -10,11 +10,7 @@ import java.util.concurrent.ScheduledExecutorService
 
 @Configuration
 @EnableScheduling
-<<<<<<<< HEAD:practice/src/main/kotlin/com/brandon/practice/config/PriceMonitorSchedulerConfiguration.kt
-class PriceMonitorSchedulerConfiguration : SchedulingConfigurer {
-========
 class ScheduledConfig: SchedulingConfigurer {
->>>>>>>> feature/20230305_multiple_scheduler:practice/src/main/kotlin/com/brandon/practice/config/ScheduledConfig.kt
 
     val PRICE_MONITOR_POOL_SIZE = 6
     val QUE_EXEUTE_POOL_SIZE = 3

@@ -1,7 +1,8 @@
 package com.brandon.practice.service
 
-import com.brandon.practice.config.PriceMonitorSchedulerConfiguration
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -9,12 +10,18 @@ import java.util.concurrent.TimeUnit
 
 @Service
 class OrderService(
-    var customizedScheduler: ScheduledExecutorService
-): CronService {
-    private val logger = LoggerFactory.getLogger(javaClass)
+    @Qualifier("queueExecuteScheduler")
+    private var queExecuteScheduler: ScheduledExecutorService
+) : CronService {
+    override val logger: Logger = LoggerFactory.getLogger(javaClass)
+    // 이 pool에서는 굳이 thread별로 관리되어야할 필요가 없는것 같아서..!
+    // private val scheduledTaskStatusMap = HashMap<String, ScheduledFuture<*>?>()
+
+    override val POOL_SIZE: Int = 1
+    override var scheduler: ScheduledExecutorService = queExecuteScheduler
 
     init {
-        customizedScheduler.scheduleAtFixedRate({ executeOrder() }, 0L, 3000L, TimeUnit.MILLISECONDS)
+        restartScheduler(className = "orderService", initial = true)
     }
 
     fun executeOrder() {
@@ -24,26 +31,7 @@ class OrderService(
         logger.info("orderService: Current thread ID($threadId) name($threadName)")
     }
 
-    override fun shutDown() {
-        logger.info("[OrderService] toShutDown Scheduler: ${customizedScheduler.toString()}")
-        if(!customizedScheduler.isShutdown){
-            logger.info("[OrderService] shutdown")
-            customizedScheduler.shutdown()
-        }
-    }
-
-    override fun restartScheduler(initial: Boolean, threadCount: Int) {
-        if(!initial){
-            logger.info("### this scheduler ${customizedScheduler.toString()}")
-            shutDown()
-            logger.info("[OrderService] scheduler shutDown?(${customizedScheduler.isShutdown})")
-            if(customizedScheduler.isShutdown){
-                logger.info("[OrderService] needs to shutdown")
-                customizedScheduler =  Executors.newScheduledThreadPool(PriceMonitorSchedulerConfiguration.POOL_SIZE)
-            }
-        }
-        logger.info("[OrderService] restart Scheduler: ${customizedScheduler.toString()}")
-        customizedScheduler.scheduleAtFixedRate({ executeOrder() }, 0L, 3000L, TimeUnit.MILLISECONDS)
-
+    override fun reassignSchedule(newScheduler: ScheduledExecutorService) {
+        newScheduler.scheduleAtFixedRate({ executeOrder() }, 0L, 3000L, TimeUnit.MILLISECONDS)
     }
 }
