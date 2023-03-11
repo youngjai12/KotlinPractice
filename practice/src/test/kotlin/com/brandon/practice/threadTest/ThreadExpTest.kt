@@ -1,4 +1,4 @@
-package com.brandon.practice
+package com.brandon.practice.threadTest
 
 import com.brandon.practice.threadExp.ThreadExpService
 import org.junit.jupiter.api.Test
@@ -15,6 +15,7 @@ class ThreadExpTest {
 
     @Test
     fun threadTest1(){
+        Thread.sleep(200000L)
         threadExpService.initiateThread("youngjai")
     }
 }
