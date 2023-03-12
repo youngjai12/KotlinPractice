@@ -21,6 +21,8 @@ sealed interface CronService {
 
     fun reassignSchedule(newScheduler: ScheduledExecutorService)
 
+    fun assignExisitngScheduler()
+
     fun restartScheduler( className: String, initial: Boolean) {
 
         // 처음이 아닌 경우면, 이미 scheduler-pool이 존재할 것이다.

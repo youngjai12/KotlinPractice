@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 import java.lang.Exception
 import java.lang.RuntimeException
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.Future
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 
@@ -16,12 +18,14 @@ class ConfirmCheckService(
 ): CronService {
     override val logger: Logger = LoggerFactory.getLogger(javaClass)
     // private lateinit var confirmQueScheduler: ScheduledExecutorService
+    private val threadStatusMap = ConcurrentHashMap<String, Future<*>?>()
 
     init {
         restartScheduler(className = "ConfirmCheckService", initial = true)
     }
 
     override var scheduler: ScheduledExecutorService = confirmQueScheduler
+
 
    fun execute() {
         val currentThread = Thread.currentThread()
@@ -42,11 +46,11 @@ class ConfirmCheckService(
     }
 
     fun task() {
-        for(i in 0..10) {
+        for(i in 0..6) {
             val currentThread = Thread.currentThread()
             val threadId = currentThread.id
             val threadName = currentThread.name
-            Thread.sleep(1000L)
+            Thread.sleep(600L)
 
             logger.info(" ### thread(${currentThread}): id(${threadId}) name(${threadName}) - $i th execution")
 
@@ -55,7 +59,14 @@ class ConfirmCheckService(
     }
 
     override fun reassignSchedule(newScheduler: ScheduledExecutorService) {
-        newScheduler.scheduleAtFixedRate({ execute2() }, 0L, 3000L, TimeUnit.MILLISECONDS)
+        scheduler = newScheduler
+        //newScheduler.scheduleAtFixedRate({ execute2() }, 0L, 3000L, TimeUnit.MILLISECONDS)
+        newScheduler.scheduleAtFixedRate( { task() },  0L, 5000L, TimeUnit.MILLISECONDS)
+
+    }
+
+    override fun assignExisitngScheduler() {
+        scheduler.scheduleAtFixedRate( { task() },  0L, 5000L, TimeUnit.MILLISECONDS)
     }
 
     override val POOL_SIZE: Int = 1

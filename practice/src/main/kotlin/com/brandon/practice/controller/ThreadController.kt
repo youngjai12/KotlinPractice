@@ -4,6 +4,7 @@ import com.brandon.practice.module.CustomizedJsonResult
 import com.brandon.practice.service.ConfirmCheckService
 import com.brandon.practice.service.OrderService
 import com.brandon.practice.service.PriceCheckService
+import com.brandon.practice.threadExp.ThreadExpService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.RestController
 class ThreadController(
     private val priceCheckService: PriceCheckService,
     private val orderService: OrderService,
-    private val confirmCheckService: ConfirmCheckService
+    private val confirmCheckService: ConfirmCheckService,
+    private val threadExpService: ThreadExpService
 ) {
 
     @GetMapping("/stock_price/restart_monitor/{threadCnt}")
@@ -33,6 +35,7 @@ class ThreadController(
         val result = priceCheckService.cancelSchedule(acctId)
         return CustomizedJsonResult.ok("cancel monitor thread(${acctId}) result(${result})")
     }
+
 
     @GetMapping("/stock_price/start_thread/{acct_id}")
     fun startStockThread(@PathVariable(value="acct_id") acctId: String): CustomizedJsonResult {
@@ -66,7 +69,27 @@ class ThreadController(
             }
         }
         return CustomizedJsonResult.ok("${pool} scheduler successfully restarted !")
+    }
 
+    @GetMapping("/thread/restart/job/{service}")
+    fun restartThread(@PathVariable(value = "service") service: String): CustomizedJsonResult {
+        when(service) {
+            "order" -> orderService.assignExisitngScheduler()
+            "confirm" -> confirmCheckService.assignExisitngScheduler()
+            "stock" -> priceCheckService.assignExisitngScheduler()
+            else -> {
+                orderService.assignExisitngScheduler()
+                confirmCheckService.assignExisitngScheduler()
+            }
+        }
+
+        return CustomizedJsonResult.ok("${service} has restarted !")
+    }
+
+    @GetMapping("/thread/excpetionOccurThread")
+    fun exceptionOccurThread() : CustomizedJsonResult {
+        //threadExpService.exceptionOccurThread()
+        return CustomizedJsonResult.ok("error_occur thread !")
     }
 
 

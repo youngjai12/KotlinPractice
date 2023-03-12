@@ -87,7 +87,21 @@ class PriceCheckService(
         }
     }
 
-  // Mono 형태로 return 해야, 합성이 쉬움
+    override fun assignExisitngScheduler() {
+        val tmpAcctIdList = listOf("youngjai", "hwang1", "purestar", "shantf2")
+        val availableAcct = tmpAcctIdList.take(threadCount)
+
+        val perAssignedCnt = ceil(TOT_STOCK_LIST.size.toDouble() / threadCount.toDouble()).toInt()
+
+        TOT_STOCK_LIST.chunked(perAssignedCnt).forEachIndexed { idx, subStockList ->
+            val acctId: String = availableAcct[idx]
+            stockAssingedMap[acctId] = subStockList
+            scheduledTaskStatusMap[acctId] = scheduler.scheduleAtFixedRate({ execute(subStockList, acctId) },
+                0L, 10L, TimeUnit.MILLISECONDS)
+        }
+    }
+
+    // Mono 형태로 return 해야, 합성이 쉬움
     fun getPriceMono(stockCd: String, acctId: String): Mono<HantooPriceTemplate.PriceResponse> {
         val appKey = userInfo.getAppKey(acctId)!!
         val appsecret = userInfo.getAppSecret(acctId)!!

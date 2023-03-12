@@ -32,6 +32,12 @@ class OrderService(
     }
 
     override fun reassignSchedule(newScheduler: ScheduledExecutorService) {
+        scheduler = newScheduler // 처음에 뜰 때 DI받았던 애는 shutdown으로 인해서 없어졋으니까, interface에서 새로 선언했던 애를 받아서 주입
+
         newScheduler.scheduleAtFixedRate({ executeOrder() }, 0L, 3000L, TimeUnit.MILLISECONDS)
+    }
+
+    override fun assignExisitngScheduler() {
+        scheduler.scheduleAtFixedRate( {executeOrder() }, 0L, 3000L, TimeUnit.MILLISECONDS)
     }
 }

@@ -29,7 +29,7 @@ class ScheduledThreadTest {
 
         // 이 class가 init되면 scheduler가 당연히 할당되니깐..!
         // confirmCheckService.reassignSchedule(confirmCheckService.scheduler)
-        Thread.sleep(200000L)
+        Thread.sleep(20000L)
     }
 
 }
