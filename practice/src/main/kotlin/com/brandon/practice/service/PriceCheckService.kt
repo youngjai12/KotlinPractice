@@ -89,7 +89,7 @@ class PriceCheckService(
         scheduler = newScheduler
 
         for((acctId, subStockList) in stockAssingedMapV2) {
-            scheduledTaskStatusMap[acctId] = scheduler.scheduleAtFixedRate({ execute(subStockList, acctId) },
+            scheduledTaskStatusMap[acctId] = scheduler.scheduleAtFixedRate({ executeV2(subStockList, acctId) },
                 0L, 10L, TimeUnit.MILLISECONDS)
         }
     }
