@@ -10,7 +10,6 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.lang.Exception
 import java.util.concurrent.*
-import kotlin.math.ceil
 import kotlin.math.floor
 
 @Service
@@ -27,8 +26,6 @@ class PriceCheckService(
 
     private val scheduledTaskStatusMap = HashMap<String, ScheduledFuture<*>?>()
 
-
-
     override var scheduler: ScheduledExecutorService = priceMonitorscheduler
 
     companion object{
@@ -39,7 +36,8 @@ class PriceCheckService(
             Stock("002504", "SZS"), Stock("008500"), Stock("MSFT", "NAS"),
             Stock("033250"), Stock("079190"), Stock("INTC", "NAS"),
             Stock("600519", "SHS"), Stock("NVDA", "NAS"),  Stock("191410"),
-            Stock("600781", "SHS"), Stock("036670"), Stock("600242", "SHS"))
+            Stock("600781", "SHS"), Stock("036670"), Stock("600242", "SHS"),
+            Stock("600157", "SHS"))
 
         val MIXED_STOCK_SAMPLE_V2 = listOf("104460", "110020", "NVDA", "140910", "AAPL", "191410", "263920")
         val MIXED_STOCK_SAMPLE_V3 = listOf("001820", "006340", "REGN", "039560", "META", "066430", "AMZN")
@@ -89,51 +87,32 @@ class PriceCheckService(
         scheduler = newScheduler
 
         for((acctId, subStockList) in stockAssingedMapV2) {
-            scheduledTaskStatusMap[acctId] = scheduler.scheduleAtFixedRate({ executeV2(subStockList, acctId) },
+            scheduledTaskStatusMap[acctId] = scheduler.scheduleAtFixedRate({ scheduledFunction(subStockList, acctId) },
                 0L, 10L, TimeUnit.MILLISECONDS)
         }
     }
 
     private fun stockAssignAlgorithm(availableAcct: List<String>, stockList: List<Stock>) {
         val perAssignedCnt = floor(MIXED_STOCK_SAMPLE.size.toDouble() / THREAD_COUNT.toDouble()).toInt()
-        val tmpAssigned = stockList.chunked(perAssignedCnt)
+        val tmpAssigned = stockList.chunked(perAssignedCnt).toMutableList()
 
         var idx =0
+        //마지막 남은 종목들 다시 분배하는것
         for(remnant in tmpAssigned.last()) {
-            tmpAssigned[idx].plus(remnant)
-            idx = (idx+1) % THREAD_COUNT
+            tmpAssigned[idx] =  tmpAssigned[idx].plus(remnant)
+            idx = ((idx+1) % THREAD_COUNT)
         }
 
-        tmpAssigned.forEachIndexed{ idx , subStockList ->
-            val acctId: String = availableAcct[idx]
+        // 마지막 꼬다리 종목들 분배완료 후 각 acct_id별로 map 만들어주기
+        tmpAssigned.subList(0, tmpAssigned.size-1).forEachIndexed{ index , subStockList ->
+            val acctId: String = availableAcct[index]
             stockAssingedMapV2[acctId] = subStockList
         }
+        logger.info("AssignedMap: ${stockAssingedMapV2}")
     }
 
-    fun reassignSchedule2(newScheduler: ScheduledExecutorService) {
-        val tmpAcctIdList = listOf("youngjai", "hwang1", "purestar", "shantf2")
-        stockAssignAlgorithm(tmpAcctIdList.take(THREAD_COUNT), MIXED_STOCK_SAMPLE)
-
-        scheduler = newScheduler
-
-        for((acctId, subStockList) in stockAssingedMapV2) {
-            scheduledTaskStatusMap[acctId] = scheduler.scheduleAtFixedRate({ execute(subStockList, acctId) },
-                0L, 10L, TimeUnit.MILLISECONDS)
-        }
-    }
-
-    override fun assignExisitngScheduler() {
-        val tmpAcctIdList = listOf("youngjai", "hwang1", "purestar", "shantf2")
-        val availableAcct = tmpAcctIdList.take(THREAD_COUNT)
-
-        val perAssignedCnt = ceil(TOT_STOCK_LIST.size.toDouble() / THREAD_COUNT.toDouble()).toInt()
-
-        TOT_STOCK_LIST.chunked(perAssignedCnt).forEachIndexed { idx, subStockList ->
-            val acctId: String = availableAcct[idx]
-            stockAssingedMap[acctId] = subStockList
-            scheduledTaskStatusMap[acctId] = scheduler.scheduleAtFixedRate({ execute(subStockList, acctId) },
-                0L, 10L, TimeUnit.MILLISECONDS)
-        }
+    override fun reassignSchedule() {
+        reassignSchedule(scheduler)
     }
 
     fun scheduledFunction(stockList: List<Stock>, acctId: String) {

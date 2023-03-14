@@ -21,7 +21,7 @@ sealed interface CronService {
 
     fun reassignSchedule(newScheduler: ScheduledExecutorService)
 
-    fun assignExisitngScheduler()
+    fun reassignSchedule()
 
     fun restartScheduler( className: String, initial: Boolean) {
 

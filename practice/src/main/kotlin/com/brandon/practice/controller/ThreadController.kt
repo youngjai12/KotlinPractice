@@ -74,12 +74,12 @@ class ThreadController(
     @GetMapping("/thread/restart/job/{service}")
     fun restartThread(@PathVariable(value = "service") service: String): CustomizedJsonResult {
         when(service) {
-            "order" -> orderService.assignExisitngScheduler()
-            "confirm" -> confirmCheckService.assignExisitngScheduler()
-            "stock" -> priceCheckService.assignExisitngScheduler()
+            "order" -> orderService.reassignSchedule()
+            "confirm" -> confirmCheckService.reassignSchedule()
+            "stock" -> priceCheckService.reassignSchedule()
             else -> {
-                orderService.assignExisitngScheduler()
-                confirmCheckService.assignExisitngScheduler()
+                orderService.reassignSchedule()
+                confirmCheckService.reassignSchedule()
             }
         }
 

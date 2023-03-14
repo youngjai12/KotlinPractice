@@ -65,8 +65,8 @@ class ConfirmCheckService(
 
     }
 
-    override fun assignExisitngScheduler() {
-        scheduler.scheduleAtFixedRate( { task() },  0L, 5000L, TimeUnit.MILLISECONDS)
+    override fun reassignSchedule() {
+        reassignSchedule(scheduler)
     }
 
     override val POOL_SIZE: Int = 1

@@ -37,7 +37,7 @@ class OrderService(
         newScheduler.scheduleAtFixedRate({ executeOrder() }, 0L, 3000L, TimeUnit.MILLISECONDS)
     }
 
-    override fun assignExisitngScheduler() {
-        scheduler.scheduleAtFixedRate( {executeOrder() }, 0L, 3000L, TimeUnit.MILLISECONDS)
+    override fun reassignSchedule() {
+        reassignSchedule(scheduler)
     }
 }
