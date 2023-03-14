@@ -27,11 +27,12 @@ class PriceCheckService(
 
     private val scheduledTaskStatusMap = HashMap<String, ScheduledFuture<*>?>()
 
-    val threadCount = 4
+
 
     override var scheduler: ScheduledExecutorService = priceMonitorscheduler
 
     companion object{
+        val THREAD_COUNT = 4
         val CHUNK_SIZE = 15
         val MIXED_STOCK_SAMPLE = listOf(Stock("002420"),  Stock("000150", "SZS"),
             Stock("006880"), Stock("002005", "SZS"), Stock("104460"),
@@ -83,33 +84,39 @@ class PriceCheckService(
 
     override fun reassignSchedule(newScheduler: ScheduledExecutorService) {
         val tmpAcctIdList = listOf("youngjai", "hwang1", "purestar", "shantf2")
-        val availableAcct: List<String> = tmpAcctIdList.take(threadCount)
+        stockAssignAlgorithm(tmpAcctIdList.take(THREAD_COUNT), MIXED_STOCK_SAMPLE)
 
-        val perAssignedCnt = ceil(MIXED_STOCK_SAMPLE.size.toDouble() / threadCount.toDouble()).toInt()
         scheduler = newScheduler
 
-        MIXED_STOCK_SAMPLE.chunked(perAssignedCnt).forEachIndexed { idx, subStockList ->
-            val acctId: String = availableAcct[idx]
-            stockAssingedMapV2[acctId] = subStockList
-            scheduledTaskStatusMap[acctId] = scheduler.scheduleAtFixedRate({ scheduledFunction(subStockList, acctId) },
+        for((acctId, subStockList) in stockAssingedMapV2) {
+            scheduledTaskStatusMap[acctId] = scheduler.scheduleAtFixedRate({ execute(subStockList, acctId) },
                 0L, 10L, TimeUnit.MILLISECONDS)
         }
     }
 
     private fun stockAssignAlgorithm(availableAcct: List<String>, stockList: List<Stock>) {
+        val perAssignedCnt = floor(MIXED_STOCK_SAMPLE.size.toDouble() / THREAD_COUNT.toDouble()).toInt()
+        val tmpAssigned = stockList.chunked(perAssignedCnt)
 
+        var idx =0
+        for(remnant in tmpAssigned.last()) {
+            tmpAssigned[idx].plus(remnant)
+            idx = (idx+1) % THREAD_COUNT
+        }
+
+        tmpAssigned.forEachIndexed{ idx , subStockList ->
+            val acctId: String = availableAcct[idx]
+            stockAssingedMapV2[acctId] = subStockList
+        }
     }
 
     fun reassignSchedule2(newScheduler: ScheduledExecutorService) {
         val tmpAcctIdList = listOf("youngjai", "hwang1", "purestar", "shantf2")
-        val availableAcct = tmpAcctIdList.take(threadCount)
+        stockAssignAlgorithm(tmpAcctIdList.take(THREAD_COUNT), MIXED_STOCK_SAMPLE)
 
-        val perAssignedCnt = floor(TOT_STOCK_LIST.size.toDouble() / threadCount.toDouble()).toInt()
         scheduler = newScheduler
 
-        TOT_STOCK_LIST.chunked(perAssignedCnt).forEachIndexed { idx, subStockList ->
-            val acctId: String = availableAcct[idx]
-            stockAssingedMap[acctId] = subStockList
+        for((acctId, subStockList) in stockAssingedMapV2) {
             scheduledTaskStatusMap[acctId] = scheduler.scheduleAtFixedRate({ execute(subStockList, acctId) },
                 0L, 10L, TimeUnit.MILLISECONDS)
         }
@@ -117,9 +124,9 @@ class PriceCheckService(
 
     override fun assignExisitngScheduler() {
         val tmpAcctIdList = listOf("youngjai", "hwang1", "purestar", "shantf2")
-        val availableAcct = tmpAcctIdList.take(threadCount)
+        val availableAcct = tmpAcctIdList.take(THREAD_COUNT)
 
-        val perAssignedCnt = ceil(TOT_STOCK_LIST.size.toDouble() / threadCount.toDouble()).toInt()
+        val perAssignedCnt = ceil(TOT_STOCK_LIST.size.toDouble() / THREAD_COUNT.toDouble()).toInt()
 
         TOT_STOCK_LIST.chunked(perAssignedCnt).forEachIndexed { idx, subStockList ->
             val acctId: String = availableAcct[idx]
