@@ -36,9 +36,6 @@ sealed interface CronService {
 
         logger.info("[${className}] has started ")
         reassignSchedule(newScheduler)
-
-
-
     }
 
 }
