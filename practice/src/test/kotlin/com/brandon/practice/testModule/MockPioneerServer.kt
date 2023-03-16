@@ -60,10 +60,13 @@ class MockPioneerServer {
     }
 
     fun raise5xxError(stockCd: String) {
+        val priceResponse = DomesticPrice(price = stockCd, priceUnit = "10")
+        val responseString = mapper.writeValueAsString(priceResponse)
+
         mockServer.`when`(
             HttpRequest.request()
                 .withMethod(HttpMethod.GET.name)
-                .withPath(DOMESTIC_PRICE_URL_TYPE)
+                .withPath(DOMESTIC_PRICE_URL)
                 .withQueryStringParameter("fid_input_iscd", stockCd)
 
         ).respond(

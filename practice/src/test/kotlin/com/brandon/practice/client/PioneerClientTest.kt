@@ -2,19 +2,24 @@ package com.brandon.practice.client
 
 import com.brandon.practice.client.PioneerClient
 import com.brandon.practice.client.PriceApiTemplate
+import com.brandon.practice.service.ConfirmCheckService
+import com.brandon.practice.service.OrderService
+import com.brandon.practice.service.PriceCheckService
 import com.brandon.practice.testModule.MockPioneerServer
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.mock.mockito.MockBean
 
 @SpringBootTest(
     webEnvironment = SpringBootTest.WebEnvironment.NONE,
     properties = [
         "client.pioneer.enable=true",
         "client.pioneer.server=http://localhost:9443",
-        "client.pioneer.timeout=200s"
+        "client.pioneer.timeout=3s"
     ]
 )
 class PioneerClientTest {
@@ -25,16 +30,26 @@ class PioneerClientTest {
 
     private val mockPioneerServer: MockPioneerServer = MockPioneerServer()
 
+    @MockBean
+    lateinit var priceCheckService: PriceCheckService
+
+    @MockBean
+    lateinit var orderService: OrderService
+
+    @MockBean
+    lateinit var confirmCheckService: ConfirmCheckService
+
     @BeforeEach
     fun beforeEach() {
         mockPioneerServer.startServer(port=9443)
         logger.info("####### initialized server ###")
     }
 
+
     @Test
     fun priceRequestExceptionTest() {
         for (stockCd in MockPioneerServer.ERROR_RAISE_STOCK_CD){
-            mockPioneerServer.getDomesticPrice("123123")
+            mockPioneerServer.raise5xxError("123123")
         }
         val domesticPriceRequest = PriceApiTemplate.DomesticPriceRequest(
             request = PriceApiTemplate.DomesticPriceRequest.Request(
@@ -43,10 +58,10 @@ class PioneerClientTest {
             header = PriceApiTemplate.DomesticPriceRequest.Header()
         )
 
-        val priceMono = pioneerClient.getPrice(domesticPriceRequest)
-        val tmpPriceInfo = priceMono.block()!!
-        val priceInfo =tmpPriceInfo.currentPrice()
-        val priceUnit = tmpPriceInfo.priceUnit()
+        val priceMono = pioneerClient.getPriceException(domesticPriceRequest)
+        val tmpPriceInfo: PriceApiTemplate.PriceResponseTemplate? = priceMono.block()
+        val priceInfo =tmpPriceInfo?.currentPrice()
+        val priceUnit = tmpPriceInfo?.priceUnit()
 
         logger.info("### ${priceInfo}, $priceUnit")
     }
