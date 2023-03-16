@@ -45,9 +45,29 @@ class PioneerClientTest {
         logger.info("####### initialized server ###")
     }
 
+    @Test
+    fun timeoutExceptionTest() {
+        //given
+
+        mockPioneerServer.getOverseaPriceNoTypeTimeout("ABCD")
+        val overseaPriceRequest = PriceApiTemplate.OverseaPriceRequest(
+            request = PriceApiTemplate.OverseaPriceRequest.Request(
+                symb = "ABCD"
+            ),
+            header = PriceApiTemplate.OverseaPriceRequest.Header()
+        )
+
+        val priceMono = pioneerClient.getPrice(overseaPriceRequest)
+        val tmpPriceInfo: PriceApiTemplate.PriceResponseTemplate? = priceMono.block()
+        val priceInfo =tmpPriceInfo?.currentPrice()
+        val priceUnit = tmpPriceInfo?.priceUnit()
+
+        logger.info("### ${priceInfo}, $priceUnit")
+    }
 
     @Test
     fun priceRequestExceptionTest() {
+        // 그냥 뻗어버리기는함... Mono에다가 .onErrorResume으로 처리 필요함.
         for (stockCd in MockPioneerServer.ERROR_RAISE_STOCK_CD){
             mockPioneerServer.raise5xxError("123123")
         }

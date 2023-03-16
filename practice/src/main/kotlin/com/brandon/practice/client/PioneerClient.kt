@@ -20,6 +20,7 @@ import org.springframework.util.MimeTypeUtils
 import org.springframework.web.util.UriBuilder
 import reactor.core.publisher.Mono
 import org.springframework.web.reactive.function.client.WebClient
+import java.time.Duration
 
 class PioneerClient(
     val clientProperties: ClientProperties
@@ -162,6 +163,7 @@ class PioneerClient(
                 it.bodyToMono(PostException::class.java)
             }
             .bodyToMono(PriceResponseTemplate::class.java)
+            .timeout(clientProperties.timeout)
 
     }
 

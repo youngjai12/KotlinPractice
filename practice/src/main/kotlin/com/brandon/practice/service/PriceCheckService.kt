@@ -150,7 +150,8 @@ class PriceCheckService(
             Thread.sleep(970)
             var priceTraceString = ""
             Flux.fromIterable(chunkedStockList).flatMap { stockCd ->
-                val priceInfo: Mono<HantooPriceTemplate.PriceResponse> = getPriceMono(stockCd.stockCd, acctId, stockCd.marketCode).onErrorResume {
+                val priceInfo: Mono<HantooPriceTemplate.PriceResponse> =
+                 getPriceMono(stockCd.stockCd, acctId, stockCd.marketCode).onErrorResume {
                     when(it) {
                         is HantooPriceTemplate.PostException ->
                             logger.error("$stockCd HantooApi Error ${it.message} ${it.msg22}")

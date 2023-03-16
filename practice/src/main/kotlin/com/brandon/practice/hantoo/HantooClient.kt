@@ -70,6 +70,7 @@ class HantooClient(
                 it.bodyToMono(HantooPriceTemplate.PostException::class.java)
             }
             .bodyToMono(HantooPriceTemplate.PriceResponse::class.java)
+            .timeout(clientProperties.timeout)
 
     }
 }
