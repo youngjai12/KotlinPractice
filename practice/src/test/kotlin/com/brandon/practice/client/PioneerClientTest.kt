@@ -32,6 +32,26 @@ class PioneerClientTest {
     }
 
     @Test
+    fun priceRequestExceptionTest() {
+        for (stockCd in MockPioneerServer.ERROR_RAISE_STOCK_CD){
+            mockPioneerServer.getDomesticPrice("123123")
+        }
+        val domesticPriceRequest = PriceApiTemplate.DomesticPriceRequest(
+            request = PriceApiTemplate.DomesticPriceRequest.Request(
+                fid_input_iscd = "123123"
+            ),
+            header = PriceApiTemplate.DomesticPriceRequest.Header()
+        )
+
+        val priceMono = pioneerClient.getPrice(domesticPriceRequest)
+        val tmpPriceInfo = priceMono.block()!!
+        val priceInfo =tmpPriceInfo.currentPrice()
+        val priceUnit = tmpPriceInfo.priceUnit()
+
+        logger.info("### ${priceInfo}, $priceUnit")
+    }
+
+    @Test
     fun getDomesticPriceTest() {
         val stockCd: String = "AAPL"
         mockPioneerServer.getOverseaPrice(stockCd)

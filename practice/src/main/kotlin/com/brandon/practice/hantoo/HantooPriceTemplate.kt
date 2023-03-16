@@ -78,7 +78,13 @@ interface HantooPriceTemplate {
             val msg_cd: String? = null,
             val msg1: String? = null
         ): ApiResponse, PriceResponse {
-            override fun currentPrice(): String = stockPriceDetail?.last ?: "-1"
+            override fun currentPrice(): String {
+                if(stockPriceDetail?.last.isNullOrEmpty()){
+                    return "-1"
+                }else{
+                    return stockPriceDetail?.last!!
+                }
+            }
             override fun priceUnit(): String {
                 return if(currentPrice().toDouble() > 10.0) {
                     "5"

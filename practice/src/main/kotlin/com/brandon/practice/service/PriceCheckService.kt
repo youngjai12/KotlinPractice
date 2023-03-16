@@ -37,7 +37,7 @@ class PriceCheckService(
             Stock("033250"), Stock("079190"), Stock("INTC", "NAS"),
             Stock("600519", "SHS"), Stock("NVDA", "NAS"),  Stock("191410"),
             Stock("600781", "SHS"), Stock("036670"), Stock("600242", "SHS"),
-            Stock("600157", "SHS"))
+            Stock("600157", "SZS"))
 
         val MIXED_STOCK_SAMPLE_V2 = listOf("104460", "110020", "NVDA", "140910", "AAPL", "191410", "263920")
         val MIXED_STOCK_SAMPLE_V3 = listOf("001820", "006340", "REGN", "039560", "META", "066430", "AMZN")
@@ -119,7 +119,7 @@ class PriceCheckService(
         try {
             executeV2(stockList, acctId)
         } catch (e: Exception){
-            logger.error("error happend! ${e.message}")
+            logger.error("error happend! ${e.message} ${e.stackTraceToString()}")
         }
 
     }

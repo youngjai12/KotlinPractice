@@ -22,6 +22,7 @@ class MockPioneerServer {
         val OVERSEA_PRICE_URL_TYPE = "/price/oversea/type"
         val DOMESTIC_PRICE_URL = "/price/domestic"
         val DOMESTIC_PRICE_URL_TYPE = "/price/domestic/type"
+        val ERROR_RAISE_STOCK_CD = listOf("123123", "456456")
 
     }
 
@@ -55,6 +56,19 @@ class MockPioneerServer {
             HttpResponse.response()
                 .withStatusCode(200)
                 .withBody(responseString, MediaType.APPLICATION_JSON_UTF_8)
+        )
+    }
+
+    fun raise5xxError(stockCd: String) {
+        mockServer.`when`(
+            HttpRequest.request()
+                .withMethod(HttpMethod.GET.name)
+                .withPath(DOMESTIC_PRICE_URL_TYPE)
+                .withQueryStringParameter("fid_input_iscd", stockCd)
+
+        ).respond(
+            HttpResponse.response()
+                .withStatusCode(500)
         )
     }
 
