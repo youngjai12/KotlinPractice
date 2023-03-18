@@ -4,6 +4,7 @@ import com.brandon.practice.client.PioneerClient
 import com.brandon.practice.client.PriceApiTemplate
 import com.brandon.practice.service.ConfirmCheckService
 import com.brandon.practice.service.OrderService
+import com.brandon.practice.service.PioneerPriceCheckService
 import com.brandon.practice.service.PriceCheckService
 import com.brandon.practice.testModule.MockPioneerServer
 import org.junit.jupiter.api.AfterAll
@@ -28,6 +29,9 @@ class PioneerClientTest {
     @Autowired
     lateinit var pioneerClient: PioneerClient
 
+    @Autowired
+    lateinit var pioneerPriceCheckService: PioneerPriceCheckService
+
     private val mockPioneerServer: MockPioneerServer = MockPioneerServer()
 
     @MockBean
@@ -46,7 +50,23 @@ class PioneerClientTest {
     }
 
     @Test
-    fun timeoutExceptionTest() {
+    fun serialApiCallExceptionTest() {
+        PioneerPriceCheckService.MIXED_STOCK_SAMPLE_V2.forEach{
+            if(it.matches("[a-zA-Z]+".toRegex())){
+                if(it == "NVDA") {
+                    mockPioneerServer.getOverseaPriceNoTypeTimeout(it)
+                }
+                mockPioneerServer.getOverseaPriceNoType(it)
+            } else {
+                mockPioneerServer.getDomesticPriceNoType(it)
+            }
+        }
+        pioneerPriceCheckService.priceCheck(PioneerPriceCheckService.MIXED_STOCK_SAMPLE_V2)
+        logger.info("priceMap : ${pioneerPriceCheckService.currentPriceInfo}")
+    }
+
+    @Test
+    fun timeoutExceptionForAStock() {
         //given
 
         mockPioneerServer.getOverseaPriceNoTypeTimeout("ABCD")
@@ -181,7 +201,7 @@ class PioneerClientTest {
         overseaPriceMono.subscribe {response ->
             when(response) {
                 is PriceApiTemplate.OverseaPriceRequest.Response -> {
-                    logger.info("#### oversea ##### stockCd(${response.stockCd}) price(${response.overseaPrice}) ")
+                    logger.info("#### oversea ##### stockCd(${stockCd}) price(${response.overseaPrice}) ")
                 }
                 is PriceApiTemplate.DomesticPriceRequest.Response -> {
                     logger.info("## domestic ## : price(${response.price}) priceUnit(${response.priceUnit})")

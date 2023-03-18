@@ -108,7 +108,7 @@ class MockPioneerServer {
 
     fun getOverseaPriceNoType(stockCd: String) {
         //val priceResponse = OverseaPrice(stockCd = stockCd, overseaPrice = "13.1")
-        val priceResponse = PriceApiTemplate.OverseaPriceRequest.Response(stockCd=stockCd, overseaPrice = "13.1123")
+        val priceResponse = PriceApiTemplate.OverseaPriceRequest.Response(overseaPrice = "13.1123")
         val responseString = mapper.writeValueAsString(priceResponse)
         logger.info("response string : ${responseString} 1(${responseString[1]})")
         mockServer.`when`(
@@ -142,7 +142,7 @@ class MockPioneerServer {
 
     fun getOverseaPriceNoTypeTimeout(stockCd: String) {
         //val priceResponse = OverseaPrice(stockCd = stockCd, overseaPrice = "13.1")
-        val priceResponse = PriceApiTemplate.OverseaPriceRequest.Response(stockCd=stockCd, overseaPrice = "13.1123")
+        val priceResponse = PriceApiTemplate.OverseaPriceRequest.Response(overseaPrice = "13.1123")
         val responseString = mapper.writeValueAsString(priceResponse)
         logger.info("response string : ${responseString} 1(${responseString[1]})")
         mockServer.`when`(

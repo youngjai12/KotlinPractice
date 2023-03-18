@@ -38,11 +38,19 @@ interface PriceApiTemplate {
     ): ApiTemplate<DomesticPriceRequest.Response, DomesticPriceRequest.Request, DomesticPriceRequest.Header> {
 
         class Response(
-            val price: String,
-            val priceUnit: String
+            val price: String? = null,
+            val priceUnit: String? = null
         ): ApiResponse, PriceResponseTemplate {
-            override fun currentPrice() = price
-            override fun priceUnit() = priceUnit
+            override fun currentPrice() = price ?: "-1"
+            override fun priceUnit(): String {
+                return price?.let {
+                    if(price.toDouble() > 10.0){
+                        "5"
+                    } else {
+                        "10"
+                    }
+                } ?: "-1"
+            }
         }
 
         class Request(
@@ -68,16 +76,18 @@ interface PriceApiTemplate {
     ): ApiTemplate<OverseaPriceRequest.Response, OverseaPriceRequest.Request, OverseaPriceRequest.Header> {
 
         class Response(
-            val stockCd: String,
-            val overseaPrice: String
+            val overseaPrice: String?=null,
+            val priceUnit: String?=null
         ): ApiResponse, PriceResponseTemplate {
-            override fun currentPrice() = overseaPrice
+            override fun currentPrice() = overseaPrice ?: "-1"
             override fun priceUnit(): String {
-                return if(overseaPrice.toDouble() > 10.0) {
-                    "5"
-                } else {
-                    "10"
-                }
+                return overseaPrice?.let {
+                    if(overseaPrice.toDouble() > 10.0){
+                        "5"
+                    } else {
+                        "10"
+                    }
+                } ?: "-1"
             }
         }
 
