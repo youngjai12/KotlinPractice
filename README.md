@@ -31,4 +31,5 @@ Test 코드를 잘 만듬으로써 시험해보는 경우도 많은데, 이떄 m
 	* 그런데, 비즈니스 로직으로 해당 객체가 잘 없어지거나, 싱글톤이 아니어야한다면,, 굳이 spring bean으로 관리할 필요가 있나? 
  * 대안 
 	* 그냥 각 class의 member variable로써 갖고 있기. 
-	* 이 class들이 extends 하는 interface에서 var로 구현하기.. 
+	* 이 class들이 extends 하는 interface에서 var로 구현하기..
+* 그러나 이 instance를 살렸다가, 죽였다가 하는 것은 비용이 너무 많이 들기 때문에 왠만하면 thread내의 함수에 대해 예외 처리를 잘해서 exception에 stable하게 만든다. 
