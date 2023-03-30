@@ -60,8 +60,8 @@ class ConfirmCheckService(
 
     override fun reassignSchedule(newScheduler: ScheduledExecutorService) {
         scheduler = newScheduler
-        //newScheduler.scheduleAtFixedRate({ execute2() }, 0L, 3000L, TimeUnit.MILLISECONDS)
-        newScheduler.scheduleAtFixedRate( { task() },  0L, 5000L, TimeUnit.MILLISECONDS)
+        newScheduler.scheduleAtFixedRate({ execute2() }, 0L, 3000L, TimeUnit.MILLISECONDS)
+        //newScheduler.scheduleAtFixedRate( { task() },  0L, 5000L, TimeUnit.MILLISECONDS)
 
     }
 

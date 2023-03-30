@@ -207,7 +207,11 @@ class PriceCheckService(
                     PriceAt(stockCd = stockCd.stockCd, price = priceInfo.currentPrice(), priceUnit = priceInfo.priceUnit())
                 }
             }.subscribe(
-                { result -> currentPriceInfo[result.stockCd] = result },
+                { result ->
+                    if(result.price != "-1"){
+                        currentPriceInfo[result.stockCd] = result
+                    }
+                },
                 { error -> logger.error("${error.message} ${error.stackTrace}")}
             )
         }

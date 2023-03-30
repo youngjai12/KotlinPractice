@@ -51,7 +51,7 @@ class PioneerClientTest {
 
     @Test
     fun serialApiCallExceptionTest() {
-        PioneerPriceCheckService.MIXED_STOCK_SAMPLE_V2.forEach{
+        PioneerPriceCheckService.MIXED_STOCK_SAMPLE_V2.forEach {
             if(it.matches("[a-zA-Z]+".toRegex())){
                 if(it == "NVDA") { // (NVDA걸리면 timeout 걸리게끔 세팅)
                     mockPioneerServer.getOverseaPriceNoTypeTimeout(it)
@@ -71,7 +71,8 @@ class PioneerClientTest {
 
         // serial하게 부르는 테스트.
         pioneerPriceCheckService.priceCheckV2(PioneerPriceCheckService.MIXED_STOCK_SAMPLE_V2)
-        Thread.sleep(800)
+        logger.error("before priceMap : ${pioneerPriceCheckService.currentPriceInfo}")
+        Thread.sleep(100)
         logger.error("priceMap : ${pioneerPriceCheckService.currentPriceInfo}")
     }
 
