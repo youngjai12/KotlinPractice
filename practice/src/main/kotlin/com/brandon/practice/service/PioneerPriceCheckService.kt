@@ -17,7 +17,7 @@ class PioneerPriceCheckService (
     val currentPriceInfo = ConcurrentHashMap<String, PriceAt>()
 
     companion object{
-        val MIXED_STOCK_SAMPLE_V2 = listOf("104460", "110020", "NVDA", "140910", "AAPL", "191410", "263920")
+        val MIXED_STOCK_SAMPLE_V2 = listOf("104460", "110020", "NVDA", "140910", "AAPL", "191410", "INTL")
     }
 
     fun getPriceMono(stockCd: String): Mono<PriceApiTemplate.PriceResponseTemplate> {
@@ -31,7 +31,7 @@ class PioneerPriceCheckService (
         } else {
             PriceApiTemplate.DomesticPriceRequest(
                 request = PriceApiTemplate.DomesticPriceRequest.Request(
-                    fid_input_iscd = "12393"
+                    fid_input_iscd = stockCd
                 ),
                 header = PriceApiTemplate.DomesticPriceRequest.Header()
             )
@@ -61,8 +61,46 @@ class PioneerPriceCheckService (
                 PriceAt(stockCd=tuple.t1, price = tuple.t2.currentPrice(), priceUnit=tuple.t2.priceUnit())
             }
         }.collectList().block()?.forEach{
-            priceTraceString = priceTraceString +"${it.stockCd}(${it.price}) "
-            currentPriceInfo[it.stockCd] = it
+            priceTraceString = priceTraceString +"${it.stockCd}(${it.price})"
+            logger.error("## ${it.stockCd}(${it.price})")
+            if(it.price != "-1"){
+                currentPriceInfo[it.stockCd] = it
+            }
+
         }
+    }
+
+    fun priceCheckV2(stockList: List<String>) {
+        var priceTraceString = ""
+        Flux.fromIterable(stockList).flatMap { stockCd ->
+            val priceInfo: Mono<PriceApiTemplate.PriceResponseTemplate> = getPriceMono(stockCd)
+                    .onErrorResume {
+                when(it) {
+                    is PriceApiTemplate.PostException ->
+                        logger.error("Known Api Error ${it.msg22}")
+                    else ->
+                        logger.error("[$stockCd] got unknown error ${it.message} ${it.cause}")
+                }
+                when(stockCd.matches("[a-zA-Z]+".toRegex())){
+                    true -> {
+                        logger.error("${stockCd} onErrorResume")
+                        Mono.just(PriceApiTemplate.OverseaPriceRequest.Response())
+                    }
+                    false -> Mono.just(PriceApiTemplate.DomesticPriceRequest.Response())
+                }
+            }
+            val stockCdMono = Mono.just(stockCd)
+            Mono.zip(stockCdMono, priceInfo).map{ tuple ->
+                PriceAt(stockCd=tuple.t1, price = tuple.t2.currentPrice(), priceUnit=tuple.t2.priceUnit())
+            }
+        }.subscribe({ priceInfo ->
+            logger.error("Successfully got price ${priceInfo.stockCd}(${priceInfo.price})")
+            currentPriceInfo[priceInfo.stockCd] = priceInfo},
+            {error -> logger.error(" This is error ${error.message} = ${error.stackTraceToString()}")}
+        )
+
+
+        logger.error("## tot-completed : getting stocks ${priceTraceString}")
+
     }
 }

@@ -20,7 +20,7 @@ import org.springframework.boot.test.mock.mockito.MockBean
     properties = [
         "client.pioneer.enable=true",
         "client.pioneer.server=http://localhost:9443",
-        "client.pioneer.timeout=3s"
+        "client.pioneer.timeout=5s"
     ]
 )
 class PioneerClientTest {
@@ -53,26 +53,38 @@ class PioneerClientTest {
     fun serialApiCallExceptionTest() {
         PioneerPriceCheckService.MIXED_STOCK_SAMPLE_V2.forEach{
             if(it.matches("[a-zA-Z]+".toRegex())){
-                if(it == "NVDA") {
+                if(it == "NVDA") { // (NVDA걸리면 timeout 걸리게끔 세팅)
                     mockPioneerServer.getOverseaPriceNoTypeTimeout(it)
+                } else {
+                    logger.error("here comes ${it}")
+                    mockPioneerServer.getOverseaPriceNoType(it)
                 }
-                mockPioneerServer.getOverseaPriceNoType(it)
             } else {
-                mockPioneerServer.getDomesticPriceNoType(it)
+                if(it == "110020" || it == "191410") {
+                    mockPioneerServer.getDomesticPriceNoTypeTimeout(it)
+                    //mockPioneerServer.getDomesticPriceNoType(it)
+                }else{
+                    mockPioneerServer.getDomesticPriceNoType(it)
+                }
             }
         }
-        pioneerPriceCheckService.priceCheck(PioneerPriceCheckService.MIXED_STOCK_SAMPLE_V2)
-        logger.info("priceMap : ${pioneerPriceCheckService.currentPriceInfo}")
+
+        // serial하게 부르는 테스트.
+        pioneerPriceCheckService.priceCheckV2(PioneerPriceCheckService.MIXED_STOCK_SAMPLE_V2)
+        Thread.sleep(800)
+        logger.error("priceMap : ${pioneerPriceCheckService.currentPriceInfo}")
     }
 
     @Test
     fun timeoutExceptionForAStock() {
         //given
+        val stockCd = "ABCD"
+        //mockPioneerServer.getOverseaPriceNoTypeTimeout(stockCd)
 
-        mockPioneerServer.getOverseaPriceNoTypeTimeout("ABCD")
+        mockPioneerServer.getOverseaPriceNoType(stockCd)
         val overseaPriceRequest = PriceApiTemplate.OverseaPriceRequest(
             request = PriceApiTemplate.OverseaPriceRequest.Request(
-                symb = "ABCD"
+                symb = stockCd
             ),
             header = PriceApiTemplate.OverseaPriceRequest.Header()
         )
@@ -107,10 +119,10 @@ class PioneerClientTest {
     }
 
     @Test
-    fun getDomesticPriceTest() {
+    fun getTotPriceTest() {
         val stockCd: String = "AAPL"
-        mockPioneerServer.getOverseaPrice(stockCd)
-        mockPioneerServer.getDomesticPrice("12393")
+        mockPioneerServer.getOverseaPriceNoType(stockCd)
+        mockPioneerServer.getDomesticPriceNoType("12393")
 
         val overseaPriceRequest = PriceApiTemplate.OverseaPriceRequest(
             request = PriceApiTemplate.OverseaPriceRequest.Request(
@@ -131,13 +143,13 @@ class PioneerClientTest {
             val tmpPriceInfo = priceMono.block()!!
             val priceInfo =tmpPriceInfo.currentPrice()
             val priceUnit = tmpPriceInfo.priceUnit()
-            logger.info("### ${priceInfo}, $priceUnit")
+            logger.error("### oversea: ${priceInfo}, $priceUnit")
 
             val domesticPriceMono = pioneerClient.getPrice(domesticPriceRequest)
             val tmpPriceInfo2 = domesticPriceMono.block()!!
             val priceInfo2 =tmpPriceInfo2.currentPrice()
             val priceUnit2 = tmpPriceInfo2.priceUnit()
-            logger.info("### domestic ${priceInfo2}, $priceUnit2")
+            logger.error("### domestic ${priceInfo2}, $priceUnit2")
         }.recover {
             when(it) {
                 is PriceApiTemplate.PostException ->

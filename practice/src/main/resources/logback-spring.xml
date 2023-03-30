@@ -14,7 +14,7 @@
 
     <appender name="baseConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>INFO</level>
+            <level>WARN</level>
         </filter>
         <encoder>
             <pattern>${CONSOLE_LOG_PATTERN}</pattern>
@@ -32,22 +32,22 @@
             <Pattern>${FILE_LOG_PATTERN}</Pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>INFO</level>
+            <level>WARN</level>
         </filter>
     </appender>
 
     <!--    <logger name="reactor.netty.http.client" level="ERROR"/>-->
 
-    <logger name="OrderLogger" level="INFO" additivity="false">
+    <logger name="OrderLogger" level="WARN" additivity="false">
         <appender-ref ref="RequestFileAppender"/>
         <appender-ref ref="baseConsoleAppender"/>
     </logger>
 
-    <root level="DEBUG">
+    <root level="WARN">
         <appender-ref ref="baseConsoleAppender"/>
     </root>
 
-    <root level="INFO">
+    <root level="WARN">
         <appender-ref ref="RequestFileAppender"/>
     </root>
 

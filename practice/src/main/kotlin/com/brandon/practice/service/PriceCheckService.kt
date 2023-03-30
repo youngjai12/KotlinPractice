@@ -117,7 +117,7 @@ class PriceCheckService(
 
     fun scheduledFunction(stockList: List<Stock>, acctId: String) {
         try {
-            executeV2(stockList, acctId)
+            executeV3(stockList, acctId)
         } catch (e: Exception){
             logger.error("error happend! ${e.message} ${e.stackTraceToString()}")
         }
@@ -177,6 +177,39 @@ class PriceCheckService(
             }
             logger.info("${acctId} - ${priceTraceString}")
 
+        }
+    }
+
+    fun executeV3(stockList: List<Stock>, acctId: String) {
+        stockList.chunked(CHUNK_SIZE).forEach{ chunkedStockList ->
+            Thread.sleep(970)
+            var priceTraceString = ""
+            Flux.fromIterable(chunkedStockList).flatMap { stockCd ->
+                val priceInfo: Mono<HantooPriceTemplate.PriceResponse> =
+                    getPriceMono(stockCd.stockCd, acctId, stockCd.marketCode).onErrorResume {
+                        when(it) {
+                            is HantooPriceTemplate.PostException ->
+                                logger.error("$stockCd HantooApi Error ${it.message} ${it.msg22}")
+                            else ->
+                                logger.error("$stockCd Unknown Error ${it.message}")
+                        }
+                        when(stockCd.marketCode.isNullOrEmpty()){
+                            true ->
+                                Mono.just(HantooPriceTemplate.DomesticPriceRequest.Response())
+                            else ->
+                                Mono.just(HantooPriceTemplate.OverseaPriceRequest.Response())
+                        }
+                    }
+                val stockMono = Mono.just(stockCd)
+                Mono.zip(stockMono, priceInfo).map{ tuple ->
+                    val stockCd = tuple.t1
+                    val priceInfo = tuple.t2
+                    PriceAt(stockCd = stockCd.stockCd, price = priceInfo.currentPrice(), priceUnit = priceInfo.priceUnit())
+                }
+            }.subscribe(
+                { result -> currentPriceInfo[result.stockCd] = result },
+                { error -> logger.error("${error.message} ${error.stackTrace}")}
+            )
         }
     }
 

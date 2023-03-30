@@ -106,6 +106,23 @@ class MockPioneerServer {
         )
     }
 
+    fun getOverseaPriceNoTypeTimeout(stockCd: String) {
+        //val priceResponse = OverseaPrice(stockCd = stockCd, overseaPrice = "13.1")
+        val priceResponse = PriceApiTemplate.OverseaPriceRequest.Response(overseaPrice = "13.1123")
+        val responseString = mapper.writeValueAsString(priceResponse)
+        mockServer.`when`(
+            HttpRequest.request()
+                .withMethod(HttpMethod.GET.name)
+                .withPath(OVERSEA_PRICE_URL)
+                .withQueryStringParameter("fid_input_iscd", stockCd)
+        ).respond(
+            HttpResponse.response()
+                .withDelay(TimeUnit.SECONDS, 8)
+                .withStatusCode(200)
+                .withBody(responseString, MediaType.APPLICATION_JSON_UTF_8)
+        )
+    }
+
     fun getOverseaPriceNoType(stockCd: String) {
         //val priceResponse = OverseaPrice(stockCd = stockCd, overseaPrice = "13.1")
         val priceResponse = PriceApiTemplate.OverseaPriceRequest.Response(overseaPrice = "13.1123")
@@ -115,7 +132,7 @@ class MockPioneerServer {
             HttpRequest.request()
                 .withMethod(HttpMethod.GET.name)
                 .withPath(OVERSEA_PRICE_URL)
-                .withQueryStringParameter("symb", stockCd)
+                .withQueryStringParameter("SYMB", stockCd)
 
         ).respond(
             HttpResponse.response()
@@ -140,15 +157,15 @@ class MockPioneerServer {
         )
     }
 
-    fun getOverseaPriceNoTypeTimeout(stockCd: String) {
+    fun getDomesticPriceNoTypeTimeout(stockCd: String) {
         //val priceResponse = OverseaPrice(stockCd = stockCd, overseaPrice = "13.1")
-        val priceResponse = PriceApiTemplate.OverseaPriceRequest.Response(overseaPrice = "13.1123")
+        val priceResponse = PriceApiTemplate.DomesticPriceRequest.Response(price = "1322", priceUnit = "1")
         val responseString = mapper.writeValueAsString(priceResponse)
         logger.info("response string : ${responseString} 1(${responseString[1]})")
         mockServer.`when`(
             HttpRequest.request()
                 .withMethod(HttpMethod.GET.name)
-                .withPath(OVERSEA_PRICE_URL)
+                .withPath(DOMESTIC_PRICE_URL)
                 .withQueryStringParameter("symb", stockCd)
 
         ).respond(
@@ -158,4 +175,6 @@ class MockPioneerServer {
                 .withBody(responseString, MediaType.APPLICATION_JSON_UTF_8)
         )
     }
+
+
 }

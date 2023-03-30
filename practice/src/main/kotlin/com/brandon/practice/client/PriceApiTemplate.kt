@@ -59,8 +59,8 @@ interface PriceApiTemplate {
 
         class Header(
             val contentType: String = MediaType.APPLICATION_JSON_VALUE,
-            @JsonProperty("Connection")
-            val connection: String = "close",
+//            @JsonProperty("Connection")
+//            val connection: String = "close",
         ): ApiHeader
 
         override fun path(): String = "/price/domestic"
@@ -92,13 +92,14 @@ interface PriceApiTemplate {
         }
 
         class Request(
+            @JsonProperty("symb")
             val symb: String
         ): ApiRequestBody
 
         class Header(
             val contentType: String = MediaType.APPLICATION_JSON_VALUE,
-            @JsonProperty("Connection")
-            val connection: String = "close",
+//            @JsonProperty("Connection")
+//            val connection: String = "close",
         ): ApiHeader
 
         override fun path(): String = "/price/oversea"

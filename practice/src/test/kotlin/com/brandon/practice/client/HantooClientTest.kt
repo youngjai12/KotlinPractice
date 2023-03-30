@@ -31,6 +31,11 @@ class HantooClientTest {
     lateinit var accessToken: String
 
     @Test
+    fun timeOutPriceTest() {
+
+    }
+
+    @Test
     fun getDomesticPriceTest() {
         logger.info("appkey: ${appkey}")
         logger.info("appsecret: ${appsecret}")
