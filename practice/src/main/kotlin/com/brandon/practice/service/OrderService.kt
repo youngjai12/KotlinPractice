@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit
 class OrderService(
     @Qualifier("queueExecuteScheduler")
     private var queExecuteScheduler: ScheduledExecutorService
-) : CronService {
+) : CronService, ScheduleType.QueueScheduler {
     override val logger: Logger = LoggerFactory.getLogger(javaClass)
     // 이 pool에서는 굳이 thread별로 관리되어야할 필요가 없는것 같아서..!
     // private val scheduledTaskStatusMap = HashMap<String, ScheduledFuture<*>?>()

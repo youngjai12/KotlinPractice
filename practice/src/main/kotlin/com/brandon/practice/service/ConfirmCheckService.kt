@@ -13,26 +13,12 @@ import java.util.concurrent.*
 class ConfirmCheckService(
     @Qualifier("queueExecuteScheduler")
     private var confirmQueScheduler: ScheduledExecutorService
-): CronService {
-    override val logger: Logger = LoggerFactory.getLogger(javaClass)
+): ScheduleType.QueueScheduler {
+    val logger: Logger = LoggerFactory.getLogger(javaClass)
     private val threadStatusMap = ConcurrentHashMap<String, Future<*>?>()
-    override lateinit var scheduler: ScheduledExecutorService
-
-    init {
-        scheduler = confirmQueScheduler  // 앱 처음시작때는 등록한 bean으로 DI받는다.
-        //restartScheduler(className = "ConfirmCheckService", initial = true)
-        reassignSchedule()
-    }
-
-   fun execute() {
-        val currentThread = Thread.currentThread()
-        val threadId = currentThread.id
-        val threadName = currentThread.name
-        logger.info("## ConfirmCheckService: Current thread ID($threadId) name($threadName)")
-    }
 
 
-    fun execute2() {
+    override fun execute() {
         try {
             task()
         } catch(e: Exception) {
@@ -55,21 +41,11 @@ class ConfirmCheckService(
         throw RuntimeException("deliberate exception for testing")
     }
 
-    override fun reassignSchedule(newScheduler: ScheduledExecutorService) {
-        scheduler = newScheduler
-        scheduler.scheduleAtFixedRate({ execute2() }, 0L, 3000L, TimeUnit.MILLISECONDS)
-        //newScheduler.scheduleAtFixedRate( { task() },  0L, 5000L, TimeUnit.MILLISECONDS)
+//    override fun reassignSchedule(newScheduler: ScheduledExecutorService) {
+//        scheduler = newScheduler
+//        scheduler.scheduleAtFixedRate({ execute() }, 0L, 3000L, TimeUnit.MILLISECONDS)
+//        //newScheduler.scheduleAtFixedRate( { task() },  0L, 5000L, TimeUnit.MILLISECONDS)
+//
+//    }
 
-    }
-
-    final override fun reassignSchedule() {
-        reassignSchedule(scheduler)
-    }
-
-    override val POOL_SIZE: Int = 1
-
-    @Scheduled(fixedDelay = 3000)
-    fun annotationScheduling() {
-
-    }
 }
