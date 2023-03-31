@@ -8,11 +8,13 @@ sealed interface CronService {
 
     var scheduler: ScheduledExecutorService
 
-    fun shutDown(className: String, logger: Logger) {
-        logger.info("[${className}] toShutDown Scheduler: ${scheduler.toString()}")
+    fun shutDown(className: String, logger: Logger): Unit {
+        logger.info(" toShutDown Scheduler: ${scheduler.toString()}")
         if(!scheduler.isShutdown){
             logger.info("[${className}] shutdown")
             scheduler.shutdown()
+            logger.info("[${className}] shutdown?(${scheduler.isShutdown})")
+
         }
     }
 

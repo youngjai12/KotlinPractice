@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 import java.lang.Exception
 import java.lang.RuntimeException
-import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.Future
-import java.util.concurrent.ScheduledExecutorService
-import java.util.concurrent.TimeUnit
+import java.util.concurrent.*
 
 @Service
 class ConfirmCheckService(
@@ -17,15 +14,13 @@ class ConfirmCheckService(
     private var confirmQueScheduler: ScheduledExecutorService
 ): CronService {
     override val logger: Logger = LoggerFactory.getLogger(javaClass)
-    // private lateinit var confirmQueScheduler: ScheduledExecutorService
     private val threadStatusMap = ConcurrentHashMap<String, Future<*>?>()
+    override lateinit var scheduler: ScheduledExecutorService
 
     init {
+        scheduler = confirmQueScheduler  // 앱 처음시작때는 등록한 bean으로 DI받는다.
         restartScheduler(className = "ConfirmCheckService", initial = true)
     }
-
-    override var scheduler: ScheduledExecutorService = confirmQueScheduler
-
 
    fun execute() {
         val currentThread = Thread.currentThread()
@@ -60,7 +55,7 @@ class ConfirmCheckService(
 
     override fun reassignSchedule(newScheduler: ScheduledExecutorService) {
         scheduler = newScheduler
-        newScheduler.scheduleAtFixedRate({ execute2() }, 0L, 3000L, TimeUnit.MILLISECONDS)
+        scheduler.scheduleAtFixedRate({ execute2() }, 0L, 3000L, TimeUnit.MILLISECONDS)
         //newScheduler.scheduleAtFixedRate( { task() },  0L, 5000L, TimeUnit.MILLISECONDS)
 
     }
@@ -70,6 +65,5 @@ class ConfirmCheckService(
     }
 
     override val POOL_SIZE: Int = 1
-
 
 }

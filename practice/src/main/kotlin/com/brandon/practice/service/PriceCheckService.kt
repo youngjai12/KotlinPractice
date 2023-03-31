@@ -250,9 +250,6 @@ class PriceCheckService(
 
         }
     }
-
-
-
 }
 
 data class Stock(
