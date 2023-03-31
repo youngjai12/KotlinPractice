@@ -3,6 +3,7 @@ package com.brandon.practice.service
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import java.lang.Exception
 import java.lang.RuntimeException
@@ -19,7 +20,8 @@ class ConfirmCheckService(
 
     init {
         scheduler = confirmQueScheduler  // 앱 처음시작때는 등록한 bean으로 DI받는다.
-        restartScheduler(className = "ConfirmCheckService", initial = true)
+        //restartScheduler(className = "ConfirmCheckService", initial = true)
+        reassignSchedule()
     }
 
    fun execute() {
@@ -60,10 +62,14 @@ class ConfirmCheckService(
 
     }
 
-    override fun reassignSchedule() {
+    final override fun reassignSchedule() {
         reassignSchedule(scheduler)
     }
 
     override val POOL_SIZE: Int = 1
 
+    @Scheduled(fixedDelay = 3000)
+    fun annotationScheduling() {
+
+    }
 }

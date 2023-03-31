@@ -22,7 +22,7 @@ class OrderService(
 
     init {
         scheduler = queExecuteScheduler // 앱 처음시작때는 등록한 bean으로 DI받는다.
-        restartScheduler(className = "orderService", initial = true)
+        reassignSchedule()
     }
 
     fun task() {
@@ -46,7 +46,7 @@ class OrderService(
         scheduler.scheduleAtFixedRate({ executeOrder() }, 0L, 3000L, TimeUnit.MILLISECONDS)
     }
 
-    override fun reassignSchedule() {
+    final override fun reassignSchedule() {
         reassignSchedule(scheduler)
     }
 }

@@ -47,7 +47,8 @@ class PriceCheckService(
     override val POOL_SIZE: Int = 5
 
     init{
-        restartScheduler(className = "PriceCherService", initial = true)
+        //restartScheduler(className = "PriceCherService", initial = true)
+        reassignSchedule()
     }
 
     fun cancelSchedule(acctId: String): Boolean {
@@ -61,8 +62,8 @@ class PriceCheckService(
     }
 
     // 기본적인 CronService 에서 제공하는 것과는 다르게, api로 개개의 acctId별 thread만 켜고싶을떄.
-    fun startSchedule(acctId: String) {
-        scheduledTaskStatusMap[acctId] = scheduler.scheduleAtFixedRate({ execute(stockAssingedMap[acctId]!!, acctId) },
+    fun startScheduleThread(acctId: String) {
+        scheduledTaskStatusMap[acctId] = scheduler.scheduleAtFixedRate({ scheduledFunction(stockAssingedMapV2[acctId]!!, acctId) },
             0L, 10L, TimeUnit.MILLISECONDS)
     }
 
@@ -111,7 +112,7 @@ class PriceCheckService(
         logger.info("AssignedMap: ${stockAssingedMapV2}")
     }
 
-    override fun reassignSchedule() {
+    final override fun reassignSchedule() {
         reassignSchedule(scheduler)
     }
 
@@ -208,12 +209,14 @@ class PriceCheckService(
                 }
             }.subscribe(
                 { result ->
+                    priceTraceString = priceTraceString +"${result.stockCd}(${result.price}) "
                     if(result.price != "-1"){
                         currentPriceInfo[result.stockCd] = result
                     }
                 },
                 { error -> logger.error("${error.message} ${error.stackTrace}")}
             )
+            logger.info("inside priceCheck[${acctId}] - ${priceTraceString}")
         }
     }
 

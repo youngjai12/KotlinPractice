@@ -40,7 +40,7 @@ class ThreadController(
 
     @GetMapping("/stock_price/start_thread/{acct_id}")
     fun startStockThread(@PathVariable(value="acct_id") acctId: String): CustomizedJsonResult {
-        priceCheckService.startSchedule(acctId)
+        priceCheckService.startScheduleThread(acctId)
         return CustomizedJsonResult.ok("successfully started thread ${acctId}")
     }
 
