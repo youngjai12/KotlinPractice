@@ -1,9 +1,7 @@
 package com.brandon.practice.controller
 
 import com.brandon.practice.module.CustomizedJsonResult
-import com.brandon.practice.service.ConfirmCheckService
-import com.brandon.practice.service.OrderService
-import com.brandon.practice.service.PriceCheckService
+import com.brandon.practice.service.*
 import com.brandon.practice.threadExp.ThreadExpService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -11,87 +9,116 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class ThreadController(
-    private val priceCheckService: PriceCheckService,
-    private val orderService: OrderService,
-    private val confirmCheckService: ConfirmCheckService,
-    private val threadExpService: ThreadExpService
+//    private val priceCheckService: PriceCheckService,
+//    private val orderService: OrderService,
+//    private val confirmCheckService: ConfirmCheckService,
+//    private val threadExpService: ThreadExpService
+
+    private val queueScheduleManager: QueueScheduleManager,
+    private val priceScheduleManager: PriceScheduleManager
 ) {
 
-    @GetMapping("/stock_price/restart_monitor/{threadCnt}")
-    fun reassignStockMonitor(@PathVariable(value = "threadCnt") threadCnt: Int): CustomizedJsonResult {
-        priceCheckService.restartScheduler("ThreadController",false)
 
-        return CustomizedJsonResult.ok("su")
-    }
 
     @GetMapping("/stock_price/show_price/{acct_id}")
     fun showPriceMap(@PathVariable(value="acct_id") acctId: String ): CustomizedJsonResult {
-        priceCheckService.showStockMap(acctId)
-        return CustomizedJsonResult.ok(priceCheckService.showStockMap(acctId))
+        val assignedResult = priceScheduleManager.showStockMap(acctId)
+        return CustomizedJsonResult.ok(assignedResult)
+    }
+
+    @GetMapping("/stock/find_by_stockCd/{stockCd}")
+    fun findAcctIdByStockCd(@PathVariable(value="stockCd") stockCd: String): CustomizedJsonResult {
+        return try{
+            val acctId = priceScheduleManager.findThreadByStockCd(stockCd)
+            CustomizedJsonResult.ok("acctId : ${acctId}")
+        } catch(e: Exception) {
+            when(e){
+                is DataNotFoundException -> return CustomizedJsonResult.dataNotFound(e.msg)
+                else -> return CustomizedJsonResult.internalError(e.stackTraceToString())
+            }
+        }
     }
 
 
-    @GetMapping("/stock_price/cancel_thread/{acct_id}")
+    @GetMapping("/thread/price/cancel/{acct_id}")
     fun cancelStockThread(@PathVariable(value="acct_id") acctId: String): CustomizedJsonResult {
-        val result = priceCheckService.cancelSchedule(acctId)
-        return CustomizedJsonResult.ok("cancel monitor thread(${acctId}) result(${result})")
+        return try {
+            priceScheduleManager.validateAcctId(acctId)
+            priceScheduleManager.cancelThread(acctId)
+            CustomizedJsonResult.internalError("dfd")
+        } catch(e: Exception) {
+            when(e) {
+                is UnavailableAccountIdException -> return CustomizedJsonResult.dataNotFound(e.msg)
+                else -> return CustomizedJsonResult.internalError(e.stackTraceToString())
+            }
+        }
     }
 
-
-    @GetMapping("/stock_price/start_thread/{acct_id}")
+    @GetMapping("/thread/price/start/{acct_id}")
     fun startStockThread(@PathVariable(value="acct_id") acctId: String): CustomizedJsonResult {
-        priceCheckService.startScheduleThread(acctId)
-        return CustomizedJsonResult.ok("successfully started thread ${acctId}")
+        return try {
+            priceScheduleManager.validateAcctId(acctId)
+            priceScheduleManager.openOnethread(acctId)
+            CustomizedJsonResult.ok("successfully started thread ${acctId}")
+        } catch (e: Exception) {
+            when(e){
+                is UnavailableAccountIdException -> return CustomizedJsonResult.dataNotFound(e.msg)
+                else -> return CustomizedJsonResult.internalError(e.stackTraceToString())
+            }
+        }
     }
 
-    @GetMapping("/thread/shut_down/{pool}")
+    @GetMapping("/thread/queue/start/{queue}")
+    fun startQueueThread(@PathVariable(value="queue") queue: String): CustomizedJsonResult {
+        return try{
+            queueScheduleManager.openThread(queue)
+            CustomizedJsonResult.ok("successfully started ${queue}")
+        } catch(e: Exception) {
+            when(e) {
+                is IllegalArgumentException -> CustomizedJsonResult.dataNotFound(e.message)
+                else -> return CustomizedJsonResult.internalError(e.stackTraceToString())
+            }
+        }
+    }
+
+    @GetMapping("/thread/queue/cancel/{queue}")
+    fun cancelQueueThread(@PathVariable(value="queue") queue: String): CustomizedJsonResult {
+        return try{
+            val result = queueScheduleManager.closeThread(queue)
+            if(result){
+                CustomizedJsonResult.ok("successfully canceled queue(${queue})")
+            } else {
+                CustomizedJsonResult.okButWarn("${queue} has not been assigned. No need to cancel")
+            }
+        } catch(e: Exception) {
+            when(e){
+                is IllegalArgumentException -> {
+                    CustomizedJsonResult.dataNotFound("${queue} not found: ${e.message}")
+                }
+                else -> {
+                    CustomizedJsonResult.internalError("${queue} ${e.stackTraceToString()}")
+                }
+            }
+        }
+    }
+
+    @GetMapping("/pool/close/{pool}")
     fun shutDownSpecificPool(@PathVariable(value = "pool") pool: String): CustomizedJsonResult {
         when (pool){
-            "order" -> orderService.shutDown("orderService", orderService.logger)
-            "confirm" -> confirmCheckService.shutDown("confirmCheckService", confirmCheckService.logger)
-            "stock" -> priceCheckService.shutDown("priceCheckService", priceCheckService.logger)
-            else -> {
-                orderService.shutDown("orderService", orderService.logger)
-                confirmCheckService.shutDown("confirmCheckService", confirmCheckService.logger)
-            }
+            "queue" -> queueScheduleManager.poolShutDown()
+            "price" -> priceScheduleManager.poolShutDown()
+            else -> return CustomizedJsonResult.dataNotFound("${pool} you entered is not found")
         }
         return CustomizedJsonResult.ok("${pool} scheduler successfully shutdown !")
     }
 
-    @GetMapping("thread/restart/{pool}")
+    @GetMapping("pool/restart/{pool}")
     fun restartSpecificPool(@PathVariable(value = "pool") pool: String): CustomizedJsonResult {
         when (pool){
-            "order" -> orderService.restartScheduler("orderService", false)
-            "confirm" -> confirmCheckService.restartScheduler("confirmCheckService", false)
-            "stock" -> priceCheckService.restartScheduler("priceCheckService", false)
-            else -> {
-                orderService.restartScheduler("orderService", false)
-                confirmCheckService.restartScheduler("confirmCheckService", false)
-            }
+            "queue" -> queueScheduleManager.restartThreadPool()
+            "price" -> priceScheduleManager.restartThreadPool()
+            else -> return CustomizedJsonResult.dataNotFound("${pool} you entered is not found")
         }
-        return CustomizedJsonResult.ok("${pool} scheduler successfully restarted !")
+        return CustomizedJsonResult.ok("${pool} scheduler successfully shutdown !")
     }
-
-    @GetMapping("/thread/restart/job/{service}")
-    fun restartThread(@PathVariable(value = "service") service: String): CustomizedJsonResult {
-        when(service) {
-            "order" -> orderService.reassignSchedule()
-            "confirm" -> confirmCheckService.reassignSchedule()
-            "stock" -> priceCheckService.reassignSchedule()
-            else -> {
-                orderService.reassignSchedule()
-                confirmCheckService.reassignSchedule()
-            }
-        }
-
-        return CustomizedJsonResult.ok("${service} has restarted !")
-    }
-
-    @GetMapping("/thread/excpetionOccurThread")
-    fun exceptionOccurThread() : CustomizedJsonResult {
-        //threadExpService.exceptionOccurThread()
-        return CustomizedJsonResult.ok("error_occur thread !")
-    }
-
-
 }
