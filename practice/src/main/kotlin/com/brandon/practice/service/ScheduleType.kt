@@ -5,5 +5,4 @@ interface ScheduleType {
         fun execute()
     }
 
-    sealed interface PriceScheduler
 }

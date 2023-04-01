@@ -13,17 +13,15 @@ import java.util.concurrent.TimeUnit
 class OrderService(
     @Qualifier("queueExecuteScheduler")
     private var queExecuteScheduler: ScheduledExecutorService
-) : CronService, ScheduleType.QueueScheduler {
-    override val logger: Logger = LoggerFactory.getLogger(javaClass)
+) : ScheduleType.QueueScheduler {
+    val logger: Logger = LoggerFactory.getLogger(javaClass)
     // 이 pool에서는 굳이 thread별로 관리되어야할 필요가 없는것 같아서..!
     // private val scheduledTaskStatusMap = HashMap<String, ScheduledFuture<*>?>()
-    override lateinit var scheduler: ScheduledExecutorService
-    override val POOL_SIZE: Int = 1
 
-    init {
-        scheduler = queExecuteScheduler // 앱 처음시작때는 등록한 bean으로 DI받는다.
-        reassignSchedule()
-    }
+//    init {
+//        scheduler = queExecuteScheduler // 앱 처음시작때는 등록한 bean으로 DI받는다.
+//        reassignSchedule()
+//    }
 
     fun task() {
         val currentThread = Thread.currentThread()
@@ -32,7 +30,7 @@ class OrderService(
         logger.info("orderService: Current thread ID($threadId) name($threadName)")
     }
 
-    fun executeOrder() {
+    override fun execute() {
         try {
             task()
         } catch(e: Exception) {
@@ -40,13 +38,13 @@ class OrderService(
         }
     }
 
-    override fun reassignSchedule(newScheduler: ScheduledExecutorService) {
-        scheduler = newScheduler // 처음에 뜰 때 DI받았던 애는 shutdown으로 인해서 없어졋으니까, interface에서 새로 선언했던 애를 받아서 주입
-
-        scheduler.scheduleAtFixedRate({ executeOrder() }, 0L, 3000L, TimeUnit.MILLISECONDS)
-    }
-
-    final override fun reassignSchedule() {
-        reassignSchedule(scheduler)
-    }
+//    override fun reassignSchedule(newScheduler: ScheduledExecutorService) {
+//        scheduler = newScheduler // 처음에 뜰 때 DI받았던 애는 shutdown으로 인해서 없어졋으니까, interface에서 새로 선언했던 애를 받아서 주입
+//
+//        scheduler.scheduleAtFixedRate({ executeOrder() }, 0L, 3000L, TimeUnit.MILLISECONDS)
+//    }
+//
+//    final override fun reassignSchedule() {
+//        reassignSchedule(scheduler)
+//    }
 }
