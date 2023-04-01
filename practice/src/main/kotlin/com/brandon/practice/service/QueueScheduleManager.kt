@@ -20,7 +20,7 @@ class QueueScheduleManager(
     override val logger: Logger = LoggerFactory.getLogger(javaClass)
     override val POOL_SIZE: Int = 2
 
-    private val threadStatusMap = HashMap<String, ScheduledFuture<*>?>()
+    override val threadStatusMap = HashMap<String, ScheduledFuture<*>?>()
     private val classNameBeanMap = HashMap<String, ScheduleType.QueueScheduler>()
 
     // sealedInterface를 상속하는 subclass들에 접근해서 그 subclass의 이름을 구하는 것
@@ -42,6 +42,13 @@ class QueueScheduleManager(
         threadPool = newThreadPool
         logger.info("on reAssignThread : ${newThreadPool}")
         assignThread()
+    }
+
+    override fun closeOpenedThread() {
+        threadStatusMap.values.toList().forEach{
+            it?.cancel(true)
+        }
+        threadStatusMap.clear()
     }
 
     final fun assignThread() {

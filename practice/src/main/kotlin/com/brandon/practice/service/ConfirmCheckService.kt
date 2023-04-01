@@ -15,16 +15,12 @@ class ConfirmCheckService(
     private var confirmQueScheduler: ScheduledExecutorService
 ): ScheduleType.QueueScheduler {
     val logger: Logger = LoggerFactory.getLogger(javaClass)
-    private val threadStatusMap = ConcurrentHashMap<String, Future<*>?>()
-
 
     override fun execute() {
         try {
             task()
         } catch(e: Exception) {
             logger.error("error happend! ${e.message}")
-            // scheduler.submit{ execute2() }
-            // reassignSchedule(scheduler)
         }
     }
 
@@ -40,12 +36,5 @@ class ConfirmCheckService(
         }
         throw RuntimeException("deliberate exception for testing")
     }
-
-//    override fun reassignSchedule(newScheduler: ScheduledExecutorService) {
-//        scheduler = newScheduler
-//        scheduler.scheduleAtFixedRate({ execute() }, 0L, 3000L, TimeUnit.MILLISECONDS)
-//        //newScheduler.scheduleAtFixedRate( { task() },  0L, 5000L, TimeUnit.MILLISECONDS)
-//
-//    }
 
 }

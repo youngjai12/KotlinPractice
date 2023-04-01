@@ -17,7 +17,7 @@ class PriceScheduleManager(
     private var priceMonitorThreadPool: ScheduledExecutorService,
     private val priceCheckService: PriceCheckService
 ): ThreadPoolManager {
-    private val threadStatusMap = HashMap<String, ScheduledFuture<*>?>()
+    override val threadStatusMap = HashMap<String, ScheduledFuture<*>?>()
     private val stockAssingedMap = HashMap<String, List<Stock>>()
 
     companion object{
@@ -45,6 +45,7 @@ class PriceScheduleManager(
         stockAssignAlgorithm(AVAILABLE_ACCT, MIXED_STOCK_SAMPLE)
         assignThread()
     }
+
     init {
         threadPool = priceMonitorThreadPool
         stockAssignAlgorithm(AVAILABLE_ACCT, MIXED_STOCK_SAMPLE)
