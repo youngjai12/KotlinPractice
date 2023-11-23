@@ -2,6 +2,7 @@ package com.brandon.practice.service
 
 import com.brandon.practice.client.PioneerClient
 import com.brandon.practice.client.PriceApiTemplate
+import com.brandon.practice.domain.ApiResponseType
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
@@ -66,7 +67,6 @@ class PioneerPriceCheckService (
             if(it.price != "-1"){
                 currentPriceInfo[it.stockCd] = it
             }
-
         }
     }
 
@@ -76,8 +76,12 @@ class PioneerPriceCheckService (
             val priceInfo: Mono<PriceApiTemplate.PriceResponseTemplate> = getPriceMono(stockCd)
                     .onErrorResume {
                 when(it) {
-                    is PriceApiTemplate.PostException ->
+                    is PriceApiTemplate.PostException -> {
                         logger.error("Known Api Error ${it.msg22}")
+                        if(it.msgCdd == ApiResponseType.ACCESS_TOKEN_EXPIRATION.code){
+                            throw it
+                        }
+                    }
                     else ->
                         logger.error("[$stockCd] got unknown error ${it.message} ${it.cause}")
                 }
@@ -93,10 +97,19 @@ class PioneerPriceCheckService (
             Mono.zip(stockCdMono, priceInfo).map{ tuple ->
                 PriceAt(stockCd=tuple.t1, price = tuple.t2.currentPrice(), priceUnit=tuple.t2.priceUnit())
             }
-        }.subscribe({ priceInfo ->
-            logger.error("Successfully got price ${priceInfo.stockCd}(${priceInfo.price})")
-            currentPriceInfo[priceInfo.stockCd] = priceInfo},
-            {error -> logger.error(" This is error ${error.message} = ${error.stackTraceToString()}")}
+        }.subscribe(
+            { priceInfo ->
+                logger.error("Successfully got price ${priceInfo.stockCd}(${priceInfo.price})")
+                currentPriceInfo[priceInfo.stockCd] = priceInfo
+            },
+            {error ->
+                    when(error) {
+                        is PriceApiTemplate.PostException -> {
+
+                        }
+                    }
+                    logger.error(" This is error ${error.message} = ${error.stackTraceToString()}")
+            }
         )
 
 

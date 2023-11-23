@@ -2,7 +2,7 @@ package com.brandon.practice.service
 
 import com.brandon.practice.hantoo.HantooClient
 import com.brandon.practice.hantoo.HantooPriceTemplate
-import com.brandon.practice.module.UserInfoProperties
+import com.brandon.practice.repository.UserAccessInfoRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
@@ -11,12 +11,11 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.lang.Exception
 import java.util.concurrent.*
-import kotlin.math.floor
 
 @Service
 class PriceCheckService(
     val hantooClient: HantooClient,
-    val userInfo: UserInfoProperties,
+    val userAccessInforepository: UserAccessInfoRepository,
     @Qualifier("priceMonitorScheduler")
     private var priceMonitorscheduler: ScheduledExecutorService,
 ) {
@@ -48,9 +47,10 @@ class PriceCheckService(
 
     // Mono 형태로 return 해야, 합성이 쉬움
     fun getPriceMono(stockCd: String, acctId: String, marketCode: String?=null): Mono<HantooPriceTemplate.PriceResponse> {
-        val appKey = userInfo.getAppKey(acctId)!!
-        val appsecret = userInfo.getAppSecret(acctId)!!
-        val accessToken = userInfo.getAccessToken(acctId)!!
+        val userInfo = userAccessInforepository.getUserInfoByAcctId(acctId)
+        val appKey = userInfo?.appKey!!
+        val appsecret = userInfo.appSecret
+        val accessToken = userInfo.accessToken
 
         val priceRequestForm = if(marketCode.isNullOrEmpty()){
             HantooPriceTemplate.DomesticPriceRequest(
@@ -111,8 +111,9 @@ class PriceCheckService(
                 val priceInfo: Mono<HantooPriceTemplate.PriceResponse> =
                     getPriceMono(stockCd.stockCd, acctId, stockCd.marketCode).onErrorResume {
                         when(it) {
-                            is HantooPriceTemplate.PostException ->
+                            is HantooPriceTemplate.PostException -> {
                                 logger.error("$stockCd HantooApi Error ${it.message} ${it.msg22}")
+                            }
                             else ->
                                 logger.error("$stockCd Unknown Error ${it.message}")
                         }

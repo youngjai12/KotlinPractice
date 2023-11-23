@@ -45,11 +45,11 @@ interface PriceApiTemplate {
             override fun priceUnit(): String {
                 return price?.let {
                     if(price.toDouble() > 10.0){
-                        "5"
+                        "500"
                     } else {
-                        "10"
+                        "100"
                     }
-                } ?: "-1"
+                } ?: "-100"
             }
         }
 

@@ -1,5 +1,6 @@
 package com.brandon.practice.repository
 
+import org.slf4j.LoggerFactory
 import java.util.concurrent.ConcurrentHashMap
 
 interface UserAccessInfoRepository {
